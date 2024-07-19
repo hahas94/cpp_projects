@@ -1,9 +1,10 @@
 /**
  * io.cpp
  * ------
- * Description: This file is meant to handle interaction between program and user, 
- * 				receive input from user and print out what the user inputed.
- * 		
+ * Description: 
+ * 	This file demonstrates exercising I/O operations, where the 
+ * 	program receives input from a user and prints out what the 
+ *  user inputed.		
  * */
 
 #include <iostream>  
