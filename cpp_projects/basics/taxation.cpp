@@ -38,8 +38,8 @@
 void test_functions();
 
 int main(){
-	test_functions();
-	// build_table();
+	// test_functions();
+	build_table();
 	return 0;
 }
 
