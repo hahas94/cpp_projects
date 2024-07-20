@@ -34,7 +34,6 @@ void print_stats(std::string path){
 		int longest_word_length{0};
 		int num_words{0};
 		int total_length{0};  // sum of all words lengths
-		float avg_length{0};
 		
 		while(file >> word){
 			// count words
