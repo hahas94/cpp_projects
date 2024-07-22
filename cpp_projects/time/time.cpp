@@ -29,7 +29,7 @@
  * 
  * @return Whether the object is valid.
  */
-bool is_valid(const Time& time){
+bool is_valid(Time const& time){
 	bool hour_valid{time.hours >= 0 && time.hours <= 23};
 	bool minutes_valid{time.minutes >= 0 && time.minutes <= 59};
 	bool seconds_valid{time.seconds >= 0 && time.seconds <= 59};
@@ -44,10 +44,11 @@ bool is_valid(const Time& time){
  * but can be turned to a 12-hour based clock with the
  * parameter `is_12_hour_format=true`.
  * 
+ * @param time: constant reference to a time object
  * @param is_12_hour_format Whether string should be 12-hour based.
  * @return The string representation.
  */
-std::string to_string(const Time& time, bool use_12_hour_format){
+std::string to_string(Time const& time, bool use_12_hour_format){
 	std::ostringstream oss;
 	int h{time.hours};
 	std::string trailer{""};
@@ -72,7 +73,10 @@ std::string to_string(const Time& time, bool use_12_hour_format){
 /**
  * @brief Check whether a time point is before or after noon.
  * 
+ * @param time: constant reference to a time object
+ * @return bool: true if time is AM else false
+ * 
  */
-bool is_am(const Time& time){
+bool is_am(Time const& time){
 	return time.hours < 12;
 }
