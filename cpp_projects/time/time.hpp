@@ -16,10 +16,10 @@ struct Time{
 	int seconds{0};
 };
 
-bool is_valid(const Time& time);
+bool is_valid(Time const& time);
 
-std::string to_string(const Time& time, bool use_12_hour_format=false);
+std::string to_string(Time const& time, bool use_12_hour_format=false);
 
-bool is_am(const Time& time);
+bool is_am(Time const& time);
 
 #endif // TIME_HPP
