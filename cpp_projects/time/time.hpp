@@ -22,4 +22,6 @@ std::string to_string(Time const& time, bool use_12_hour_format=false);
 
 bool is_am(Time const& time);
 
+Time operator +(Time const& time, int const seconds);
+
 #endif // TIME_HPP
