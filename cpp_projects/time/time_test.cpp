@@ -138,3 +138,61 @@ TEST_CASE("Time class, is_am()", "[is_am]"){
 	Time t4{23, 59, 59};
 	REQUIRE_FALSE(is_am(t4));
 }
+
+TEST_CASE("Time class, operator+()", "[operator+]"){
+	// increase time with 0 seconds
+	Time t1{};
+	Time t1_future{t1 + 0};
+	REQUIRE(t1_future.seconds == t1.seconds);
+	REQUIRE(t1_future.minutes == t1.minutes);
+	REQUIRE(t1_future.hours == t1.hours);
+
+
+	// increase time with seconds
+	Time t2{10, 30, 12};
+	int seconds = 15;
+	Time t2_future{t2 + seconds};
+	REQUIRE(t2_future.seconds == t2.seconds + seconds);
+	REQUIRE(t2_future.minutes == t2.minutes);
+	REQUIRE(t2_future.hours == t2.hours);
+
+	// increase time with seconds and minutes 
+	Time t3{11, 17, 4};
+	seconds = 65;
+	Time t3_future{t3 + seconds};
+	REQUIRE(t3_future.seconds == t3.seconds + 5);
+	REQUIRE(t3_future.minutes == t3.minutes + 1);
+	REQUIRE(t3_future.hours == t3.hours);
+
+	// increase time with seconds, minutes and hours
+	Time t4{13, 21, 0};
+	seconds = 3663;
+	Time t4_future{t4 + seconds};
+	REQUIRE(t4_future.seconds == t4.seconds + 3);
+	REQUIRE(t4_future.minutes == t4.minutes + 1);
+	REQUIRE(t4_future.hours == t4.hours + 1);
+
+	// increase time with 10 seconds and ensure old time is unchanged
+	Time t5{};
+	t5 + 10;
+	REQUIRE_FALSE(t5.seconds != 0);
+	REQUIRE_FALSE(t5.minutes != 0);
+	REQUIRE_FALSE(t5.hours != 0);
+
+	// increase time with seconds and hours 
+	Time t6{14, 20, 1};
+	seconds = 7205;
+	Time t6_future{t6 + seconds};
+	REQUIRE(t6_future.seconds == t6.seconds + 5);
+	REQUIRE(t6_future.minutes == t6.minutes);
+	REQUIRE(t6_future.hours == t6.hours + 2);
+
+	// increase time with minutes and hours 
+	Time t7{22, 11, 10};
+	seconds = 10920;
+	Time t7_future{t7 + seconds};
+	REQUIRE(t7_future.seconds == t7.seconds );
+	REQUIRE(t7_future.minutes == t7.minutes + 2);
+	REQUIRE(t7_future.hours == t7.hours + 3);
+
+}
