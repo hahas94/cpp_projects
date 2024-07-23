@@ -80,3 +80,29 @@ std::string to_string(Time const& time, bool use_12_hour_format){
 bool is_am(Time const& time){
 	return time.hours < 12;
 }
+
+/**
+ * @brief Create a new time point a number of seconds into the future.
+ * 
+ * @param time: constant reference to a time object
+ * @param seconds: number of seconds into the future.
+ * @return bool: true if time is AM else false
+ * 
+ */
+Time operator +(Time const& time, int const seconds){
+	Time future_time{time};
+	
+	int sec_in_hour{3600};
+	int sec_in_min{60};
+
+	int hours{seconds / sec_in_hour};
+	int minutes{(seconds - (hours * sec_in_hour)) / sec_in_min};
+	int sec{seconds - (hours * sec_in_hour) - (minutes * sec_in_min)};
+	
+	future_time.hours += hours;
+	future_time.minutes += minutes;
+	future_time.seconds += sec;
+
+	return future_time;
+}
+
