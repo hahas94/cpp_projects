@@ -82,7 +82,10 @@ bool is_am(Time const& time){
 }
 
 /**
- * @brief Create a new time point a number of seconds into the future.
+ * @brief Addition between time point a number of seconds.
+ * 
+ * A new time point with a number of seconds into the future
+ * is created and returned.
  * 
  * @param time: constant reference to a time object
  * @param seconds: number of seconds into the future.
@@ -90,19 +93,30 @@ bool is_am(Time const& time){
  * 
  */
 Time operator +(Time const& time, int const seconds){
-	Time future_time{time};
-	
-	int sec_in_hour{3600};
 	int sec_in_min{60};
+	int sec_in_hour{60 * sec_in_min};
+	int sec_in_day{24 * sec_in_hour};
 
-	int hours{seconds / sec_in_hour};
-	int minutes{(seconds - (hours * sec_in_hour)) / sec_in_min};
-	int sec{seconds - (hours * sec_in_hour) - (minutes * sec_in_min)};
+
+	// int hours{seconds / sec_in_hour};
+	// int minutes{(seconds - (hours * sec_in_hour)) / sec_in_min};
+	// int sec{seconds - (hours * sec_in_hour) - (minutes * sec_in_min)};
 	
-	future_time.hours += hours;
-	future_time.minutes += minutes;
-	future_time.seconds += sec;
+	// future_time.hours += hours;
+	// future_time.minutes += minutes;
+	// future_time.seconds += sec;
 
+	int future_time_in_sec{time.hours * sec_in_hour + 
+					       time.minutes * sec_in_min + 
+						   time.seconds + seconds};
+
+	future_time_in_sec %= sec_in_day;
+
+	int h{future_time_in_sec / sec_in_hour};
+	int m{(future_time_in_sec % sec_in_hour) / sec_in_min};
+	int s{(future_time_in_sec % sec_in_hour) % sec_in_min};
+
+	Time future_time{h, m, s};
 	return future_time;
 }
 
