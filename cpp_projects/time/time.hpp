@@ -24,4 +24,6 @@ bool is_am(Time const& time);
 
 Time operator+(Time const& time, int const seconds);
 
+Time operator-(Time const& time, int const seconds);
+
 #endif // TIME_HPP
