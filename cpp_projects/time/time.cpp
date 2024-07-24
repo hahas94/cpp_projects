@@ -89,7 +89,7 @@ bool is_am(Time const& time){
  * 
  * @param time: constant reference to a time object
  * @param seconds: number of seconds into the future.
- * @return bool: true if time is AM else false
+ * @return Time: new Time point
  * 
  */
 Time operator +(Time const& time, int const seconds){
@@ -97,20 +97,14 @@ Time operator +(Time const& time, int const seconds){
 	int sec_in_hour{60 * sec_in_min};
 	int sec_in_day{24 * sec_in_hour};
 
-
-	// int hours{seconds / sec_in_hour};
-	// int minutes{(seconds - (hours * sec_in_hour)) / sec_in_min};
-	// int sec{seconds - (hours * sec_in_hour) - (minutes * sec_in_min)};
-	
-	// future_time.hours += hours;
-	// future_time.minutes += minutes;
-	// future_time.seconds += sec;
-
 	int future_time_in_sec{time.hours * sec_in_hour + 
 					       time.minutes * sec_in_min + 
 						   time.seconds + seconds};
 
 	future_time_in_sec %= sec_in_day;
+
+	// handling negative time by turning a day forward
+	future_time_in_sec += (sec_in_day * (future_time_in_sec < 0));
 
 	int h{future_time_in_sec / sec_in_hour};
 	int m{(future_time_in_sec % sec_in_hour) / sec_in_min};
@@ -120,3 +114,17 @@ Time operator +(Time const& time, int const seconds){
 	return future_time;
 }
 
+/**
+ * @brief Subtraction between time point a number of seconds.
+ * 
+ * A new time point with a number of seconds in the past
+ * is created and returned.
+ * 
+ * @param time: constant reference to a time object
+ * @param seconds: number of seconds in the past.
+ * @return Time: new Time point
+ * 
+ */
+Time operator-(Time const& time, int const seconds){
+	return time + (-seconds);
+}
