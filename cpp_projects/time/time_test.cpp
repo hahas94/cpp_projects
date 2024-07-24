@@ -216,3 +216,81 @@ TEST_CASE("Time class, operator+()", "[operator+]"){
 	REQUIRE(to_string(t11_future) == "01:00:00");
 	REQUIRE(is_valid(t11_future));
 }
+
+TEST_CASE("Time class, operator-()", "[operator-]"){
+	// decrease time with 0 seconds
+	Time t1{};
+	Time t1_past{t1 - 0};
+	REQUIRE(to_string(t1_past) == "00:00:00");
+	REQUIRE(is_valid(t1_past));
+
+	// decrease time with seconds
+	Time t2{10, 30, 12};
+	int seconds = 10;
+	Time t2_past{t2 - seconds};
+	REQUIRE(to_string(t2_past) == "10:30:02");
+	REQUIRE(is_valid(t2_past));
+
+	// decrease time with seconds and minutes 
+	Time t3{11, 17, 4};
+	seconds = 63;
+	Time t3_past{t3 - seconds};
+	REQUIRE(to_string(t3_past) == "11:16:01");
+	REQUIRE(is_valid(t3_past));
+
+	// decrease time with seconds, minutes and hours
+	Time t4{13, 21, 4};
+	seconds = 3663;
+	Time t4_past{t4 - seconds};
+	REQUIRE(to_string(t4_past) == "12:20:01");
+	REQUIRE(is_valid(t4_past));
+
+	// decrease time with 10 seconds and ensure old time is unchanged
+	Time t5{};
+	t5 - 10;
+	REQUIRE(to_string(t5) == "00:00:00");
+	REQUIRE(is_valid(t5));
+
+	// decrease time with seconds and hours 
+	Time t6{14, 20, 40};
+	seconds = 7205;
+	Time t6_past{t6 - seconds};
+	REQUIRE(to_string(t6_past) == "12:20:35");
+	REQUIRE(is_valid(t6_past));
+
+	// decrease time with minutes and hours 
+	Time t7{22, 11, 10};
+	seconds = 10920;
+	Time t7_past{t7 - seconds};
+	REQUIRE(to_string(t7_past) == "19:09:10");
+	REQUIRE(is_valid(t7_past));
+
+	// decrease time with seconds, that will change minutes too
+	Time t8{23, 50, 1};
+	seconds = 11;
+	Time t8_past{t8 - seconds};
+	REQUIRE(to_string(t8_past) == "23:49:50");
+	REQUIRE(is_valid(t8_past));
+
+	// decrease time with seconds, that will change minutes and hours too
+	Time t9{};
+	seconds = 1;
+	Time t9_past{t9 - seconds};
+	REQUIRE(to_string(t9_past) == "23:59:59");
+	REQUIRE(is_valid(t9_past));
+
+	// decrease time with seconds and minutes, 
+	// which in turn changes hours too
+	Time t10{0, 5, 1};
+	seconds = 303;
+	Time t10_past{t10 - seconds};
+	REQUIRE(to_string(t10_past) == "23:59:58");
+	REQUIRE(is_valid(t10_past));
+
+	// decrease time a more than a day
+	Time t11{23, 0, 0};
+	seconds = 25*3600;
+	Time t11_past{t11 - seconds};
+	REQUIRE(to_string(t11_past) == "22:00:00");
+	REQUIRE(is_valid(t11_past));
+}
