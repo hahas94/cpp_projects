@@ -143,56 +143,76 @@ TEST_CASE("Time class, operator+()", "[operator+]"){
 	// increase time with 0 seconds
 	Time t1{};
 	Time t1_future{t1 + 0};
-	REQUIRE(t1_future.seconds == t1.seconds);
-	REQUIRE(t1_future.minutes == t1.minutes);
-	REQUIRE(t1_future.hours == t1.hours);
-
+	REQUIRE(to_string(t1_future) == "00:00:00");
+	REQUIRE(is_valid(t1_future));
 
 	// increase time with seconds
 	Time t2{10, 30, 12};
 	int seconds = 15;
 	Time t2_future{t2 + seconds};
-	REQUIRE(t2_future.seconds == t2.seconds + seconds);
-	REQUIRE(t2_future.minutes == t2.minutes);
-	REQUIRE(t2_future.hours == t2.hours);
+	REQUIRE(to_string(t2_future) == "10:30:27");
+	REQUIRE(is_valid(t2_future));
 
 	// increase time with seconds and minutes 
 	Time t3{11, 17, 4};
 	seconds = 65;
 	Time t3_future{t3 + seconds};
-	REQUIRE(t3_future.seconds == t3.seconds + 5);
-	REQUIRE(t3_future.minutes == t3.minutes + 1);
-	REQUIRE(t3_future.hours == t3.hours);
+	REQUIRE(to_string(t3_future) == "11:18:09");
+	REQUIRE(is_valid(t3_future));
 
 	// increase time with seconds, minutes and hours
 	Time t4{13, 21, 0};
 	seconds = 3663;
 	Time t4_future{t4 + seconds};
-	REQUIRE(t4_future.seconds == t4.seconds + 3);
-	REQUIRE(t4_future.minutes == t4.minutes + 1);
-	REQUIRE(t4_future.hours == t4.hours + 1);
+	REQUIRE(to_string(t4_future) == "14:22:03");
+	REQUIRE(is_valid(t4_future));
 
 	// increase time with 10 seconds and ensure old time is unchanged
 	Time t5{};
 	t5 + 10;
-	REQUIRE_FALSE(t5.seconds != 0);
-	REQUIRE_FALSE(t5.minutes != 0);
-	REQUIRE_FALSE(t5.hours != 0);
+	REQUIRE(to_string(t5) == "00:00:00");
+	REQUIRE(is_valid(t5));
 
 	// increase time with seconds and hours 
 	Time t6{14, 20, 1};
 	seconds = 7205;
 	Time t6_future{t6 + seconds};
-	REQUIRE(t6_future.seconds == t6.seconds + 5);
-	REQUIRE(t6_future.minutes == t6.minutes);
-	REQUIRE(t6_future.hours == t6.hours + 2);
+	REQUIRE(to_string(t6_future) == "16:20:06");
+	REQUIRE(is_valid(t6_future));
 
 	// increase time with minutes and hours 
 	Time t7{22, 11, 10};
 	seconds = 10920;
 	Time t7_future{t7 + seconds};
-	REQUIRE(t7_future.seconds == t7.seconds );
-	REQUIRE(t7_future.minutes == t7.minutes + 2);
-	REQUIRE(t7_future.hours == t7.hours + 3);
+	REQUIRE(to_string(t7_future) == "01:13:10");
+	REQUIRE(is_valid(t7_future));
 
+	// increase time with seconds, that will change minutes too
+	Time t8{23, 50, 50};
+	seconds = 11;
+	Time t8_future{t8 + seconds};
+	REQUIRE(to_string(t8_future) == "23:51:01");
+	REQUIRE(is_valid(t8_future));
+
+	// increase time with seconds, that will change minutes and hours too
+	Time t9{23, 59, 59};
+	seconds = 1;
+	Time t9_future{t9 + seconds};
+	REQUIRE(to_string(t9_future) == "00:00:00");
+	REQUIRE(is_valid(t9_future));
+
+	// increase time with seconds and minutes, 
+	// which in turn changes hours too
+	Time t10{22, 58, 55};
+	seconds = 65;
+	Time t10_future{t10 + seconds};
+	REQUIRE(to_string(t10_future) == "23:00:00");
+	REQUIRE(is_valid(t10_future));
+
+	// increase time to change day
+	Time t11{23, 0, 0};
+	seconds = 7200;
+	Time t11_future{t11 + seconds};
+	REQUIRE(to_string(t11_future) == "01:00:00");
+	REQUIRE(is_valid(t11_future));
 }
