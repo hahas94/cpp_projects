@@ -26,4 +26,6 @@ Time operator+(Time const& time, int const seconds);
 
 Time operator-(Time const& time, int const seconds);
 
+Time& operator++(Time& time);
+
 #endif // TIME_HPP
