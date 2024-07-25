@@ -254,3 +254,20 @@ bool operator<(Time const& t1, Time const& t2){
 	return t1_total_secs < t2_total_secs;
 }
 
+/**
+ * @brief t1 == t2.
+ * 
+ * Equality operator overloading between two time points.
+ * 
+ * @param t1: reference to a time object
+ * @param t2: reference to a time object
+ * @return bool: whether t1 is equal t2.
+ * 
+ */
+bool operator==(Time const& t1, Time const& t2){
+	int t1_total_secs{time_in_sec(t1.hours, t1.minutes, t1.seconds)};
+	int t2_total_secs{time_in_sec(t2.hours, t2.minutes, t2.seconds)};
+	
+	return t1_total_secs == t2_total_secs;
+}
+
