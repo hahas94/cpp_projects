@@ -294,3 +294,29 @@ TEST_CASE("Time class, operator-()", "[operator-]"){
 	REQUIRE(to_string(t11_past) == "22:00:00");
 	REQUIRE(is_valid(t11_past));
 }
+
+TEST_CASE("Time class, prefix-operator++()", "[operator++]"){
+	// increment regular time
+	Time t1{};
+	++t1;
+	REQUIRE(to_string(t1) == "00:00:01");
+	REQUIRE(is_valid(t1));
+
+	// increment time that will change minute
+	Time t2{0, 0, 59};
+	++t2;
+	REQUIRE(to_string(t2) == "00:01:00");
+	REQUIRE(is_valid(t2));
+
+	// increment time that will change hour
+	Time t3{0, 59, 59};
+	++t3;
+	REQUIRE(to_string(t3) == "01:00:00");
+	REQUIRE(is_valid(t3));
+
+	// increment time that will change day
+	Time t4{23, 59, 59};
+	++t4;
+	REQUIRE(to_string(t4) == "00:00:00");
+	REQUIRE(is_valid(t4));
+}
