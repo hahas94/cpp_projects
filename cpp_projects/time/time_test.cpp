@@ -575,3 +575,17 @@ TEST_CASE("Time class, greater operator>()", "[operator>]"){
 	REQUIRE_FALSE(t5 > t6);
 	REQUIRE(t6 > t5);
 }
+
+TEST_CASE("Time class, not equal operator!=()", "[operator!=]"){
+	// both cases, not equal
+	Time t1{0, 0, 1};
+	Time t2;
+	REQUIRE(t1 != t2);
+	REQUIRE(t2 != t1);
+
+	// both cases, equal, false
+	Time t3;
+	Time t4;
+	REQUIRE_FALSE(t3 != t4);
+	REQUIRE_FALSE(t4 != t3);
+}
