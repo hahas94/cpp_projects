@@ -385,3 +385,33 @@ TEST_CASE("Time class, postfix-increment operator++()", "[operator++]"){
 	REQUIRE(to_string(t5++) == "23:59:59");
 	REQUIRE(to_string(t5) == "00:00:00");
 }
+
+TEST_CASE("Time class, postfix-decrement operator--()", "[operator--]"){
+	// decrement regular time
+	Time t1{0, 0, 1};
+	t1--;
+	REQUIRE(to_string(t1) == "00:00:00");
+	REQUIRE(is_valid(t1));
+
+	// decrement time that will change minute
+	Time t2{0, 59, 0};
+	t2--;
+	REQUIRE(to_string(t2) == "00:58:59");
+	REQUIRE(is_valid(t2));
+
+	// decrement time that will change hour
+	Time t3{22, 0, 0};
+	t3--;
+	REQUIRE(to_string(t3) == "21:59:59");
+	REQUIRE(is_valid(t3));
+
+	// decrement time that will change day
+	Time t4{};
+	t4--;
+	REQUIRE(to_string(t4) == "23:59:59");
+	REQUIRE(is_valid(t4));
+
+	// test that decremented time is not changed
+	Time t5{23, 59, 59};
+	REQUIRE(to_string(t5--) == "23:59:59");
+}
