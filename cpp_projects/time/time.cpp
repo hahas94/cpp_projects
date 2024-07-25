@@ -299,3 +299,17 @@ bool operator>=(Time const& t1, Time const& t2){
 	return !(t1 < t2);
 }
 
+/**
+ * @brief t1 > t2.
+ * 
+ * Strictly greater than operator overloading between two time points.
+ * 
+ * @param t1: reference to a time object
+ * @param t2: reference to a time object
+ * @return bool: whether t1 is ahead of t2.
+ * 
+ */
+bool operator>(Time const& t1, Time const& t2){
+	return !(t1 < t2) && !(t1 == t2);
+}
+
