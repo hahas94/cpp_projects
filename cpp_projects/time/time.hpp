@@ -32,4 +32,6 @@ Time operator++(Time& time, int);
 
 Time& operator--(Time& time);
 
+Time operator--(Time& time, int);
+
 #endif // TIME_HPP
