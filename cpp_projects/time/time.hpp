@@ -44,4 +44,6 @@ bool operator>=(Time const& t1, Time const& t2);
 
 bool operator>(Time const& t1, Time const& t2);
 
+bool operator!=(Time const& t1, Time const& t2);
+
 #endif // TIME_HPP
