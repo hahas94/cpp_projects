@@ -221,3 +221,18 @@ Time& operator--(Time& time){
 
 	return time;
 }
+
+/**
+ * @brief time--.
+ * 
+ * Postfix-decrement operator overloading for a time point.
+ * 
+ * @param time: a time object
+ * @return Time: a copy of the time point before change.
+ * 
+ */
+Time operator--(Time& time, int){
+	Time copy{time};
+	--time;
+	return copy;
+}
