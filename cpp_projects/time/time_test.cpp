@@ -604,3 +604,80 @@ TEST_CASE("Time class, cout operator<<()", "[operator<<]"){
 	oss2 << t2;
 	REQUIRE(oss2.str() == "22:10:13");
 }
+
+TEST_CASE("Time class, cin operator>>()", "[operator>>]"){
+	// regular test
+	Time t1;
+	std::istringstream iss{"00:01:02"};
+	iss >> t1;
+	REQUIRE(t1.hours == 0);
+	REQUIRE(t1.minutes == 1);
+	REQUIRE(t1.seconds == 2);
+
+	// regular test
+	Time t2;
+	std::istringstream iss2{"22:10:13"};
+	iss2 >> t2;
+	REQUIRE(to_string(t2) == "22:10:13");
+
+	// loner than needed input, is fine
+	Time t3;
+	std::istringstream iss3{"21:14:01 "};
+	iss3 >> t3;
+	REQUIRE(to_string(t3) == "21:14:01");
+
+	// loner than needed input, is fine
+	Time t4;
+	std::istringstream iss4{" 21:14:01"};
+	iss4 >> t4;
+	REQUIRE(to_string(t4) == "21:14:01");
+
+	// incorrect char, must fail
+	Time t5;
+	std::istringstream iss5{"_21:14:01"};
+	iss5 >> t5;
+	REQUIRE(iss5.fail());
+
+	// incorrect char, must fail
+	Time t55;
+	std::istringstream iss55{"s21:14:01"};
+	iss55 >> t55;
+	REQUIRE(iss55.fail());
+
+	// incorrect second, must fail
+	Time t6;
+	std::istringstream iss6{"21:14:91"};
+	iss6 >> t6;
+	REQUIRE(iss6.fail());
+
+	// incorrect minute, must fail
+	Time t7;
+	std::istringstream iss7{"21:64:51"};
+	iss7 >> t7;
+	REQUIRE(iss7.fail());
+
+	// incorrect hour, must fail
+	Time t8;
+	std::istringstream iss8{"41:54:51"};
+	iss8 >> t8;
+	REQUIRE(iss8.fail());
+
+	// negative time, must fail
+	Time t9;
+	std::istringstream iss9{"-21:54:51"};
+	iss9 >> t9;
+	REQUIRE(iss9.fail());
+
+	// extra spaces, is fine
+	Time t10;
+	std::istringstream iss10{"21 : 54 : 51"};
+	iss10 >> t10;
+	REQUIRE(to_string(t10) == "21:54:51");
+
+	// if operation fails, time is unchanged.
+	Time t11;
+	std::istringstream iss11{"-21:54:51"};
+	iss11 >> t11;
+	REQUIRE(iss11.fail());
+	REQUIRE(to_string(t11) == "00:00:00");
+}
