@@ -9,6 +9,7 @@
 #define TIME_HPP
 
 #include <string>
+#include <iostream>
 
 struct Time{
 	int hours{0};
@@ -45,5 +46,7 @@ bool operator>=(Time const& t1, Time const& t2);
 bool operator>(Time const& t1, Time const& t2);
 
 bool operator!=(Time const& t1, Time const& t2);
+
+std::ostream& operator<<(std::ostream& os, Time const& time);
 
 #endif // TIME_HPP
