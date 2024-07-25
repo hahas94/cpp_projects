@@ -271,3 +271,31 @@ bool operator==(Time const& t1, Time const& t2){
 	return t1_total_secs == t2_total_secs;
 }
 
+/**
+ * @brief t1 <= t2.
+ * 
+ * Less than or equal operator overloading between two time points.
+ * 
+ * @param t1: reference to a time object
+ * @param t2: reference to a time object
+ * @return bool: whether t1 is less than or equal to t2.
+ * 
+ */
+bool operator<=(Time const& t1, Time const& t2){
+	return t1 < t2 || t1 == t2;
+}
+
+/**
+ * @brief t1 >= t2.
+ * 
+ * Greater than or equal operator overloading between two time points.
+ * 
+ * @param t1: reference to a time object
+ * @param t2: reference to a time object
+ * @return bool: whether t1 is greater than or equal to t2.
+ * 
+ */
+bool operator>=(Time const& t1, Time const& t2){
+	return !(t1 < t2);
+}
+
