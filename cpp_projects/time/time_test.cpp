@@ -415,3 +415,47 @@ TEST_CASE("Time class, postfix-decrement operator--()", "[operator--]"){
 	Time t5{23, 59, 59};
 	REQUIRE(to_string(t5--) == "23:59:59");
 }
+
+TEST_CASE("Time class, less-than operator<()", "[operator<]"){
+	// both cases, second
+	Time t1{0, 0, 1};
+	Time t2;
+	REQUIRE_FALSE(t1 < t2);
+	REQUIRE(t2 < t1);
+
+	// both cases, minute
+	Time t3{0, 1, 0};
+	Time t4;
+	REQUIRE_FALSE(t3 < t4);
+	REQUIRE(t4 < t3);
+
+	// both cases, hour
+	Time t5{1, 0, 0};
+	Time t6;
+	REQUIRE_FALSE(t5 < t6);
+	REQUIRE(t6 < t5);
+
+	// both cases, second and minute
+	Time t7{0, 2, 1};
+	Time t8;
+	REQUIRE_FALSE(t7 < t8);
+	REQUIRE(t8 < t7);
+
+	// both cases, second and hour
+	Time t9{1, 0, 1};
+	Time t10;
+	REQUIRE_FALSE(t9 < t10);
+	REQUIRE(t10 < t9);
+
+	// both cases, minute and hour
+	Time t11{1, 1, 0};
+	Time t12;
+	REQUIRE_FALSE(t11 < t12);
+	REQUIRE(t12 < t11);
+
+	// both cases, second, minute and hour
+	Time t13{1, 1, 1};
+	Time t14;
+	REQUIRE_FALSE(t13 < t14);
+	REQUIRE(t14 < t13);
+}
