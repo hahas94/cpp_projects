@@ -459,3 +459,71 @@ TEST_CASE("Time class, less-than operator<()", "[operator<]"){
 	REQUIRE_FALSE(t13 < t14);
 	REQUIRE(t14 < t13);
 }
+
+TEST_CASE("Time class, equality operator==()", "[operator==]"){
+	// both cases, second
+	Time t1{0, 0, 1};
+	Time t2{0, 0, 1};
+	REQUIRE(t1 == t2);
+	REQUIRE(t2 == t1);
+
+	// both cases, minute
+	Time t3{0, 1, 0};
+	Time t4{0, 1, 0};
+	REQUIRE(t3 == t4);
+	REQUIRE(t4 == t3);
+
+	// both cases, hour
+	Time t5{1, 0, 0};
+	Time t6{1, 0, 0};
+	REQUIRE(t5 == t6);
+	REQUIRE(t6 == t5);
+
+	// both cases, second and minute
+	Time t7{0, 2, 1};
+	Time t8{0, 2, 1};
+	REQUIRE(t7 == t8);
+	REQUIRE(t8 == t7);
+
+	// both cases, second and hour
+	Time t9{1, 0, 1};
+	Time t10{1, 0, 1};
+	REQUIRE(t9 == t10);
+	REQUIRE(t10 == t9);
+
+	// both cases, minute and hour
+	Time t11{1, 1, 0};
+	Time t12{1, 1, 0};
+	REQUIRE(t11 == t12);
+	REQUIRE(t12 == t11);
+
+	// both cases, second, minute and hour
+	Time t13{1, 1, 1};
+	Time t14{1, 1, 1};
+	REQUIRE(t13 == t14);
+	REQUIRE(t14 == t13);
+
+	// both cases, second, false
+	Time t15{0, 0, 1};
+	Time t16{0, 0, 2};
+	REQUIRE_FALSE(t15 == t16);
+	REQUIRE_FALSE(t16 == t15);
+
+	// both cases, minute, false
+	Time t17{0, 1, 0};
+	Time t18{0, 2, 0};
+	REQUIRE_FALSE(t17 == t18);
+	REQUIRE_FALSE(t18 == t17);
+
+	// both cases, hour, false
+	Time t19{1, 0, 0};
+	Time t20{2, 0, 0};
+	REQUIRE_FALSE(t19 == t20);
+	REQUIRE_FALSE(t20 == t19);
+
+	// both cases, second, minute and hour, false
+	Time t21{1, 1, 1};
+	Time t22{2, 2, 2};
+	REQUIRE_FALSE(t21 == t22);
+	REQUIRE_FALSE(t22 == t21);
+}
