@@ -187,9 +187,24 @@ Time& operator++(Time& time){
 }
 
 /**
- * @brief ++time.
+ * @brief time++.
  * 
- * Prefix-increment operator overloading for a time point.
+ * Postfix-increment operator overloading for a time point.
+ * 
+ * @param time: reference to a time object
+ * @return Time: copy of the time point before change.
+ * 
+ */
+Time operator++(Time& time, int){
+	Time copy{time};
+	++time;
+	return copy;
+}
+
+/**
+ * @brief --time.
+ * 
+ * Prefix-decrement operator overloading for a time point.
  * 
  * @param time: reference to a time object
  * @return Time: the time point changed
