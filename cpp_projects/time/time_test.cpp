@@ -295,7 +295,7 @@ TEST_CASE("Time class, operator-()", "[operator-]"){
 	REQUIRE(is_valid(t11_past));
 }
 
-TEST_CASE("Time class, prefix-operator++()", "[operator++]"){
+TEST_CASE("Time class, prefix-increment operator++()", "[operator++]"){
 	// increment regular time
 	Time t1{};
 	++t1;
@@ -318,5 +318,31 @@ TEST_CASE("Time class, prefix-operator++()", "[operator++]"){
 	Time t4{23, 59, 59};
 	++t4;
 	REQUIRE(to_string(t4) == "00:00:00");
+	REQUIRE(is_valid(t4));
+}
+
+TEST_CASE("Time class, prefix-decrement operator--()", "[operator--]"){
+	// decrement regular time
+	Time t1{0, 0, 1};
+	--t1;
+	REQUIRE(to_string(t1) == "00:00:00");
+	REQUIRE(is_valid(t1));
+
+	// decrement time that will change minute
+	Time t2{0, 59, 0};
+	--t2;
+	REQUIRE(to_string(t2) == "00:58:59");
+	REQUIRE(is_valid(t2));
+
+	// decrement time that will change hour
+	Time t3{22, 0, 0};
+	--t3;
+	REQUIRE(to_string(t3) == "21:59:59");
+	REQUIRE(is_valid(t3));
+
+	// decrement time that will change day
+	Time t4{};
+	--t4;
+	REQUIRE(to_string(t4) == "23:59:59");
 	REQUIRE(is_valid(t4));
 }
