@@ -527,3 +527,31 @@ TEST_CASE("Time class, equality operator==()", "[operator==]"){
 	REQUIRE_FALSE(t21 == t22);
 	REQUIRE_FALSE(t22 == t21);
 }
+
+TEST_CASE("Time class, less than or equal operator<=()", "[operator<=]"){
+	// both cases, less than
+	Time t1{0, 0, 1};
+	Time t2;
+	REQUIRE_FALSE(t1 <= t2);
+	REQUIRE(t2 <= t1);
+
+	// both cases, equal
+	Time t3{0, 1, 0};
+	Time t4{0, 1, 0};
+	REQUIRE(t3 <= t4);
+	REQUIRE(t4 <= t3);
+}
+
+TEST_CASE("Time class, greater than or equal operator>=()", "[operator>=]"){
+	// both cases, greater
+	Time t1{0, 0, 1};
+	Time t2;
+	REQUIRE(t1 >= t2);
+	REQUIRE_FALSE(t2 >= t1);
+
+	// both cases, equal
+	Time t3{0, 1, 0};
+	Time t4{0, 1, 0};
+	REQUIRE(t3 >= t4);
+	REQUIRE(t4 >= t3);
+}
