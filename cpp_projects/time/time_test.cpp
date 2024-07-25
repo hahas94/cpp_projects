@@ -1,5 +1,6 @@
 #include "time.hpp"
 #include "catch.hpp"
+#include <sstream>
 
 TEST_CASE("Time class, constructor", "[Time]"){
 	// default time instance should have all three fields set to 0
@@ -588,4 +589,18 @@ TEST_CASE("Time class, not equal operator!=()", "[operator!=]"){
 	Time t4;
 	REQUIRE_FALSE(t3 != t4);
 	REQUIRE_FALSE(t4 != t3);
+}
+
+TEST_CASE("Time class, cout operator<<()", "[operator<<]"){
+	// regular test
+	Time t1{0, 0, 1};
+	std::ostringstream oss{};
+	oss << t1;
+	REQUIRE(oss.str() == "00:00:01");
+
+	// regular test
+	Time t2{22, 10, 13};
+	std::ostringstream oss2{};
+	oss2 << t2;
+	REQUIRE(oss2.str() == "22:10:13");
 }
