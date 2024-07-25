@@ -49,4 +49,6 @@ bool operator!=(Time const& t1, Time const& t2);
 
 std::ostream& operator<<(std::ostream& os, Time const& time);
 
+std::istream& operator>>(std::istream& is, Time& time);
+
 #endif // TIME_HPP
