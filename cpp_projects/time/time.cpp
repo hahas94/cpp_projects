@@ -178,10 +178,31 @@ Time& operator++(Time& time){
 	int future_time_in_sec{time_in_sec(time.hours, 
 									   time.minutes, 
 									   time.seconds + 1)};
-	
+
 	time.hours = get_hour(future_time_in_sec);
 	time.minutes = get_min(future_time_in_sec);
 	time.seconds = get_sec(future_time_in_sec);
+
+	return time;
+}
+
+/**
+ * @brief ++time.
+ * 
+ * Prefix-increment operator overloading for a time point.
+ * 
+ * @param time: reference to a time object
+ * @return Time: the time point changed
+ * 
+ */
+Time& operator--(Time& time){
+	int past_time_in_sec{time_in_sec(time.hours, 
+									   time.minutes, 
+									   time.seconds - 1)};
+	
+	time.hours = get_hour(past_time_in_sec);
+	time.minutes = get_min(past_time_in_sec);
+	time.seconds = get_sec(past_time_in_sec);
 
 	return time;
 }
