@@ -21,6 +21,52 @@
 #include <iomanip>
 #include <sstream>
 
+// ------------ HELPER FUNCTIONS ------------
+
+// Return number of seconds in a minute.
+int sec_in_min(){
+	return 60;
+}
+
+// Return number of seconds in an hour.
+int sec_in_hour(){
+	return 60 * sec_in_min();
+}
+
+// Return number of seconds in a minute.
+int sec_in_day(){
+	return 24 * sec_in_hour();
+}
+
+// Return number of seconds in a time.
+int time_in_sec(int const h, int const m, int const s){
+	int secs{h * sec_in_hour() + m * sec_in_min() + s};
+	secs %= sec_in_day();
+	
+	// if time is negative, then map it to the corresponding actual time
+	if(secs < 0){
+		secs += sec_in_day();
+	} 
+	return secs;
+}
+
+// Partition given number of seconds and return number of hours (0 =< h <= 23).
+int get_hour(int const sec){
+	return sec / sec_in_hour();
+}
+
+// Partition given number of seconds and return number of minutes (0 =< m <= 59) 
+int get_min(int const sec){
+	return (sec % sec_in_hour()) / sec_in_min();
+}
+
+// Partition given number of seconds and return number of seconds (0 =< s <= 59) 
+int get_sec(int const sec){
+	return (sec % sec_in_hour()) % sec_in_min();
+}
+
+// ------------ PUBLIC FUNCTIONS ------------
+
 /**
  * @brief Check whether a time point is valid.
  * 
@@ -93,24 +139,14 @@ bool is_am(Time const& time){
  * 
  */
 Time operator +(Time const& time, int const seconds){
-	int sec_in_min{60};
-	int sec_in_hour{60 * sec_in_min};
-	int sec_in_day{24 * sec_in_hour};
+	int future_time_in_sec{time_in_sec(time.hours, 
+									   time.minutes, 
+									   time.seconds + seconds)};
 
-	int future_time_in_sec{time.hours * sec_in_hour + 
-					       time.minutes * sec_in_min + 
-						   time.seconds + seconds};
+	Time future_time{get_hour(future_time_in_sec), 
+					 get_min(future_time_in_sec), 
+					 get_sec(future_time_in_sec)};
 
-	future_time_in_sec %= sec_in_day;
-
-	// handling negative time by turning a day forward
-	future_time_in_sec += (sec_in_day * (future_time_in_sec < 0));
-
-	int h{future_time_in_sec / sec_in_hour};
-	int m{(future_time_in_sec % sec_in_hour) / sec_in_min};
-	int s{(future_time_in_sec % sec_in_hour) % sec_in_min};
-
-	Time future_time{h, m, s};
 	return future_time;
 }
 
@@ -127,4 +163,25 @@ Time operator +(Time const& time, int const seconds){
  */
 Time operator-(Time const& time, int const seconds){
 	return time + (-seconds);
+}
+
+/**
+ * @brief ++time.
+ * 
+ * Prefix-increment operator overloading for a time point.
+ * 
+ * @param time: reference to a time object
+ * @return Time: the time point changed
+ * 
+ */
+Time& operator++(Time& time){
+	int future_time_in_sec{time_in_sec(time.hours, 
+									   time.minutes, 
+									   time.seconds + 1)};
+	
+	time.hours = get_hour(future_time_in_sec);
+	time.minutes = get_min(future_time_in_sec);
+	time.seconds = get_sec(future_time_in_sec);
+
+	return time;
 }
