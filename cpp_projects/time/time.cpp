@@ -327,3 +327,14 @@ bool operator!=(Time const& t1, Time const& t2){
 	return !(t1 == t2);
 }
 
+/**
+ * @brief Printing a time object to the console.
+ * 
+ * @param t1: reference to an ostream object
+ * @param t2: reference to a time object
+ * @return ostream&: the ostream.
+ * 
+ */
+std::ostream& operator<<(std::ostream& os, Time const& time){
+	return os << to_string(time);
+}
