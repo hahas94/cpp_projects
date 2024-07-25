@@ -328,13 +328,43 @@ bool operator!=(Time const& t1, Time const& t2){
 }
 
 /**
- * @brief Printing a time object to the console.
+ * @brief Overloading printing operator.
  * 
- * @param t1: reference to an ostream object
- * @param t2: reference to a time object
+ * @param os: reference to an ostream object
+ * @param time: reference to a time object
  * @return ostream&: the ostream.
  * 
  */
 std::ostream& operator<<(std::ostream& os, Time const& time){
 	return os << to_string(time);
+}
+
+/**
+ * @brief Overloading input operator.
+ * 
+ * The expected format: "HH:MM:SS". Will set the fail flag
+ * if input format is incorrect.
+ * 
+ * @param is: reference to an istream object
+ * @param time: reference to a time object
+ * @return ostream&: the ostream.
+ * 
+ */
+std::istream& operator>>(std::istream& is, Time& time){
+	int h, m, s;
+	char c1, c2;
+
+	if((is >> h >> c1 >> m >> c2 >> s) && (c1 == ':') && (c2 == ':')){
+		if(h < 0 || h > 23 || m < 0 || m > 59 || s < 0 || s > 59){
+			is.setstate(std::ios_base::failbit);
+		}else{
+			time.hours = h;
+			time.minutes = m;
+			time.seconds = s;
+		}
+	}else{
+		is.setstate(std::ios_base::failbit);
+	}
+
+	return is;
 }
