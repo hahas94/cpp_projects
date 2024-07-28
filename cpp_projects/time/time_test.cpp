@@ -1,5 +1,5 @@
 #include "time.hpp"
-#include "catch.hpp"
+#include "../../test/catch.hpp"
 #include <sstream>
 
 TEST_CASE("Time class, constructor", "[Time]"){
