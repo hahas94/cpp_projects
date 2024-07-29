@@ -8,15 +8,21 @@
 #ifndef LINKED_LIST_HPP
 #define LINKED_LIST_HPP
 
+#include <string>
+#include <iostream>
+
 class List{
 	public:
 		List();
 
+		void print(std::ostream& os);
+
 	private:
 		class Node{
-			int value;
-			Node* next;
-		};
+			public:
+				int value;
+				Node* next;
+			};
 
 		Node* first{};
 };
