@@ -28,6 +28,18 @@ List::List()
 	: first{nullptr}
 	{}
 
+void List::print(std::ostream& os){
+	os << "[";
+	Node* tmp{first};
+	while(tmp){
+		os << tmp->value;
+		if(tmp->next){
+			os << ", ";
+		}
+		tmp = tmp->next;
+	} 
 
+	os << "]";
+}
 
 // ============== END OF FILE ==============
