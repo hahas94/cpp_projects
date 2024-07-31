@@ -31,15 +31,44 @@ List::List()
 void List::print(std::ostream& os){
 	os << "[";
 	Node* tmp{first};
-	while(tmp){
+	while(tmp != nullptr){
 		os << tmp->value;
-		if(tmp->next){
+		if(tmp->next != nullptr){
 			os << ", ";
 		}
 		tmp = tmp->next;
 	} 
 
 	os << "]";
+}
+
+void List::insert(int v){
+	Node* tmp{new Node{v, nullptr}};
+
+	// first node
+	if(first == nullptr || v <= first->value){
+		tmp->next = first;
+		first = tmp;
+	}
+	else{
+		Node* curr{first};
+
+		while(curr->next != nullptr){
+			if(v <= (curr->next)->value){
+				tmp->next = curr->next;
+				curr->next = tmp;
+				break;
+			}
+
+			curr = curr->next;
+
+			if(curr->next == nullptr){
+				// reaching last element
+				curr->next = tmp;
+				break;
+			}
+		}
+	}
 }
 
 // ============== END OF FILE ==============
