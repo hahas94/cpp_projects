@@ -17,6 +17,8 @@ class List{
 
 		void print(std::ostream& os);
 
+		void insert(int v);
+
 	private:
 		class Node{
 			public:
