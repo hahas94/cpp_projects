@@ -24,11 +24,22 @@
 
 #include "linked_list.hpp"
 
+/**
+ * @brief Initializing an empty linked list.
+ * 
+ */
 List::List()
-	: first{nullptr}
+	: first{nullptr}, _size{0}
 	{}
 
-void List::print(std::ostream& os){
+/**
+ * @brief Printing the linked list.
+ * 
+ * Example: [1, 2, 3]
+ * 
+ * @param os: An output stream to write to, typically std::cout.
+ */
+void List::print(std::ostream& os) const{
 	os << "[";
 	Node* tmp{first};
 	while(tmp != nullptr){
@@ -42,6 +53,11 @@ void List::print(std::ostream& os){
 	os << "]";
 }
 
+/**
+ * @brief Inserting a new value while keeping the list sorted.
+ * 
+ * @param v: integer value to be inserted.
+ */
 void List::insert(int v){
 	Node* tmp{new Node{v, nullptr}};
 
@@ -69,6 +85,24 @@ void List::insert(int v){
 			}
 		}
 	}
+
+	_size++;
+}
+
+/**
+ * @brief Returning number of elements in the list.
+ * 
+ */
+int List::size() const{
+	return _size;
+}
+
+/**
+ * @brief Checking whether the list is empty.
+ * 
+ */
+bool List::is_empty() const{
+	return _size == 0;
 }
 
 // ============== END OF FILE ==============

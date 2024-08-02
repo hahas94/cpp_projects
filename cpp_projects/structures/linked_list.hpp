@@ -15,9 +15,13 @@ class List{
 	public:
 		List();
 
-		void print(std::ostream& os);
+		void print(std::ostream& os) const;
 
 		void insert(int v);
+
+		int size() const;
+
+		bool is_empty() const;
 
 	private:
 		class Node{
@@ -27,6 +31,7 @@ class List{
 			};
 
 		Node* first{};
+		int _size;
 };
 
 
