@@ -105,4 +105,34 @@ bool List::is_empty() const{
 	return _size == 0;
 }
 
+/**
+ * @brief Remove an element by index while keeping the list sorted.
+ * 
+ * If the element does not exist, then nothing happens.
+ * 
+ * @param idx: index to value to be removed.
+ */
+void List::remove_index(int idx){
+	if(idx <= _size-1 && idx >= 0 && _size > 0){
+		if(idx == 0){
+			Node* tmp{first};
+			first = tmp->next;
+			delete tmp;
+			_size--;
+		}
+		else{
+			int i{0};
+			Node* prev{first};
+			while(i < idx-1){
+				i++;
+				prev = prev->next;
+			}
+			Node* tmp{prev->next};
+			prev->next = tmp->next;
+			delete tmp;
+			_size--;
+		}
+	}
+}
+
 // ============== END OF FILE ==============

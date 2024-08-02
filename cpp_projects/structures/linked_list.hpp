@@ -19,6 +19,8 @@ class List{
 
 		void insert(int v);
 
+		void remove_index(int idx);
+
 		int size() const;
 
 		bool is_empty() const;
@@ -30,6 +32,7 @@ class List{
 				Node* next;
 			};
 
+		// ----- instance variables -----
 		Node* first{};
 		int _size;
 };
