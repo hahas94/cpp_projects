@@ -15,6 +15,16 @@ class List{
 	public:
 		List();
 
+		List(List const& other);
+
+		List(List&& other);
+
+		~List();
+
+		List& operator=(List const& other);
+
+		List& operator=(List&& other);
+
 		void print(std::ostream& os) const;
 
 		void insert(int v);
@@ -35,6 +45,8 @@ class List{
 		// ----- instance variables -----
 		Node* first{};
 		int _size;
+
+		void _destructor_helper();
 };
 
 

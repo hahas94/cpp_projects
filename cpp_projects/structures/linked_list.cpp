@@ -33,6 +33,14 @@ List::List()
 	{}
 
 /**
+ * @brief Destructing the list, i.e. removing all nodes.
+ * 
+ */
+List::~List(){
+	_destructor_helper();
+}
+
+/**
  * @brief Printing the linked list.
  * 
  * Example: [1, 2, 3]
@@ -132,6 +140,16 @@ void List::remove_index(int idx){
 			delete tmp;
 			_size--;
 		}
+	}
+}
+
+void List::_destructor_helper(){
+	if(_size > 0){
+		remove_index(0);
+		_destructor_helper();
+	}
+	else{
+		delete first;
 	}
 }
 
