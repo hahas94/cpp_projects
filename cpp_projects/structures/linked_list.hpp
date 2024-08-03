@@ -35,6 +35,8 @@ class List{
 
 		bool is_empty() const;
 
+		int at(int idx);
+
 	private:
 		class Node{
 			public:

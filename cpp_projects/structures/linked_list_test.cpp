@@ -116,4 +116,28 @@ TEST_CASE("Test remove method"){
 	REQUIRE(list.is_empty());
 }
 
+TEST_CASE("Test at method"){
+	List list;
+
+	// test invalid indices
+	REQUIRE_THROWS_AS(list.at(0), std::out_of_range);
+	REQUIRE_THROWS_AS(list.at(-1), std::out_of_range);
+	REQUIRE_THROWS_AS(list.at(10), std::out_of_range);
+	
+	// first node
+	list.insert(5);
+	list.insert(3);
+	list.insert(9);
+	list.insert(7);
+
+	// test all existing positions
+	REQUIRE(list.at(0) == 3);
+	REQUIRE(list.at(1) == 5);
+	REQUIRE(list.at(2) == 7);
+	REQUIRE(list.at(3) == 9);
+
+	// test error message
+	REQUIRE_THROWS_WITH(list.at(11), "Index out of range.");
+}
+
 // ============== END OF FILE ==============

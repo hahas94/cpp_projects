@@ -153,4 +153,27 @@ void List::_destructor_helper(){
 	}
 }
 
+/**
+ * @brief Retrieve element at position `idx`.
+ * 
+ * If the index is out of range, throws std::out_of_range exception.
+ * 
+ * @param idx: index to value to be retrieved.
+ * @throws: std::out_of_range exception
+ * @return: element at index
+ */
+int List::at(int idx){
+	if(idx > _size-1 || idx < 0 || (idx == _size)){
+		throw std::out_of_range("Index out of range.");
+	}
+	else {
+		int i{0};
+		Node* node{first};
+		while(i < idx){
+			i++;
+			node = node->next;
+		}
+		return node->value;
+	}
+}
 // ============== END OF FILE ==============
