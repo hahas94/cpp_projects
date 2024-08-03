@@ -33,11 +33,35 @@ List::List()
 	{}
 
 /**
+ * @brief Copy constructor.
+ * 
+ * A new list is created by making a deep copy of an existing list. 
+ * The copy and original are unrelated, that's change in one of them 
+ * does not affect the other.
+ * 
+ * @param other: Constant reference to the existing list.
+ * 
+ */
+List::List(List const& other)
+	: first{nullptr}, _size{0}
+	{	
+		if(other.first != nullptr){
+			Node* tmp{other.first};
+
+			while(tmp != nullptr){
+				insert(tmp->value);
+				tmp = tmp->next;
+			}
+		}
+	}
+
+/**
  * @brief Destructing the list, i.e. removing all nodes.
  * 
  */
 List::~List(){
 	_destructor_helper();
+	delete first;
 }
 
 /**
@@ -77,19 +101,21 @@ void List::insert(int v){
 	else{
 		Node* curr{first};
 
-		while(curr->next != nullptr){
-			if(v <= (curr->next)->value){
+		while(curr != nullptr){
+			if(curr->next == nullptr){
+				// reaching end, insert as last element
+				curr->next = tmp;
+				break;
+			}
+			else if(v <= (curr->next)->value){
+				// insert between current and next node
 				tmp->next = curr->next;
 				curr->next = tmp;
 				break;
 			}
-
-			curr = curr->next;
-
-			if(curr->next == nullptr){
-				// reaching last element
-				curr->next = tmp;
-				break;
+			else{
+				// continue searching for correct position
+				curr = curr->next;
 			}
 		}
 	}
@@ -148,9 +174,6 @@ void List::_destructor_helper(){
 		remove(0);
 		_destructor_helper();
 	}
-	else{
-		delete first;
-	}
 }
 
 /**
@@ -162,7 +185,7 @@ void List::_destructor_helper(){
  * @throws: std::out_of_range exception
  * @return: element at index
  */
-int List::at(int idx){
+int List::at(int idx) const{
 	if(idx > _size-1 || idx < 0 || (idx == _size)){
 		throw std::out_of_range("Index out of range.");
 	}
