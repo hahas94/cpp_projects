@@ -29,7 +29,7 @@ class List{
 
 		void insert(int v);
 
-		void remove_index(int idx);
+		void remove(int idx);
 
 		int size() const;
 

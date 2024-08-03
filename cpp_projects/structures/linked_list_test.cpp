@@ -64,7 +64,7 @@ TEST_CASE("Test is_empty method"){
 	REQUIRE_FALSE(list.is_empty());
 }
 
-TEST_CASE("Test remove_index method"){
+TEST_CASE("Test remove method"){
 	List list;
 	std::ostringstream oss{};
 	
@@ -84,32 +84,32 @@ TEST_CASE("Test remove_index method"){
 	list.insert(4);
 
 	// try remove node at illegal index
-	list.remove_index(-1);
+	list.remove(-1);
 	REQUIRE(list.size() == 5);
 
 	// try remove node at illegal index
-	list.remove_index(11);
+	list.remove(11);
 	REQUIRE(list.size() == 5);
 
 	// remove first node
-	list.remove_index(0);
+	list.remove(0);
 	REQUIRE(list.size() == 4);
 
 	// remove node between two nodes
-	list.remove_index(1);
+	list.remove(1);
 	REQUIRE(list.size() == 3);
 
 	// remove last node
-	list.remove_index(2);
+	list.remove(2);
 	
 	// make list empty
-	list.remove_index(0);
-	list.remove_index(0);
+	list.remove(0);
+	list.remove(0);
 	REQUIRE(list.size() == 0);
 	REQUIRE(list.is_empty());
 
 	// try remove from empty list
-	list.remove_index(0);
+	list.remove(0);
 	list.print(oss);
 	REQUIRE(oss.str() == "[]");
 	REQUIRE(list.size() == 0);	

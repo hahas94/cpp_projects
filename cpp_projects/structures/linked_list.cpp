@@ -116,11 +116,11 @@ bool List::is_empty() const{
 /**
  * @brief Remove an element by index while keeping the list sorted.
  * 
- * If the element does not exist, then nothing happens.
+ * If the index is out of range, then nothing happens.
  * 
  * @param idx: index to value to be removed.
  */
-void List::remove_index(int idx){
+void List::remove(int idx){
 	if(idx <= _size-1 && idx >= 0 && _size > 0){
 		if(idx == 0){
 			Node* tmp{first};
@@ -145,7 +145,7 @@ void List::remove_index(int idx){
 
 void List::_destructor_helper(){
 	if(_size > 0){
-		remove_index(0);
+		remove(0);
 		_destructor_helper();
 	}
 	else{
