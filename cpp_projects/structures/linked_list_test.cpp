@@ -43,8 +43,6 @@ TEST_CASE("Test insert method"){
 	list3.insert(0);
 	list3.print(oss3);
 	REQUIRE(oss3.str() == "[0, 1, 2]");
-
-
 }
 
 TEST_CASE("Test size method"){
@@ -190,5 +188,68 @@ TEST_CASE("Test copy construcor"){
 	copy2.print(oss2);
 	REQUIRE(oss1.str() == "[4]");
 	REQUIRE(oss2.str() == "[3, 4, 7]");
+}
+
+TEST_CASE("Test copy assignment"){
+	// test copy of empty lists
+	// ** create two empty lists, copy one to the other, add/remove elements to the 
+	// copy and other, they should be different
+	std::ostringstream oss1{};
+	std::ostringstream oss_copy1{};
+	List list1;
+	List copy1;
+	copy1 = list1;
+	REQUIRE(list1.size() == copy1.size());
+	copy1.insert(1);
+	copy1.insert(1);
+	copy1.insert(2);
+	list1.insert(3);
+	REQUIRE(list1.size() == 1);
+	REQUIRE(copy1.size() == 3);
+	list1.print(oss1);
+	copy1.print(oss_copy1);
+	REQUIRE(oss1.str() == "[3]");
+	REQUIRE(oss_copy1.str() == "[1, 1, 2]");
+
+	// test copy of filled to empty list
+	// the copy must become empty
+	List list2;
+	List copy2;
+	copy2.insert(2);
+	copy2.insert(3);
+	copy2 = list2;
+	REQUIRE(list2.size() == copy2.size());
+	REQUIRE(list2.size() == 0);
+	
+	// test copy of empty to filled list
+	// the copy must become filled
+	List list3;
+	List copy3;
+	list3.insert(2);
+	list3.insert(3);
+	copy3 = list3;
+	REQUIRE(list3.size() == copy3.size());
+	REQUIRE(list3.at(0) + list3.at(1) ==  copy3.at(0) + copy3.at(1));
+
+	// test copy of filled lists
+	// the content of the copy and other must be identical
+	std::ostringstream oss4{};
+	std::ostringstream oss_copy4{};
+	List list4;
+	List copy4;
+	list4.insert(2);
+	list4.insert(7);
+	list4.insert(3);
+	list4.insert(5);
+	copy4.insert(9);
+	copy4 = list4;
+	REQUIRE(list4.size() == copy4.size());
+	list4.print(oss4);
+	copy4.print(oss_copy4);
+	REQUIRE(oss4.str() == "[2, 3, 5, 7]");
+	REQUIRE(oss_copy4.str() == "[2, 3, 5, 7]");
+	list4.insert(0);
+	copy4.insert(9);
+	REQUIRE_FALSE(list4.at(4) == copy4.at(4));
 }
 // ============== END OF FILE ==============

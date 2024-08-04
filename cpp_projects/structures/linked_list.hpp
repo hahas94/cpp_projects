@@ -49,6 +49,7 @@ class List{
 		int _size;
 
 		void _destructor_helper();
+		void _constructor_helper(Node* const& node);
 };
 
 

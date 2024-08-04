@@ -46,12 +46,7 @@ List::List(List const& other)
 	: first{nullptr}, _size{0}
 	{	
 		if(other.first != nullptr){
-			Node* tmp{other.first};
-
-			while(tmp != nullptr){
-				insert(tmp->value);
-				tmp = tmp->next;
-			}
+			_constructor_helper(other.first);
 		}
 	}
 
@@ -62,6 +57,28 @@ List::List(List const& other)
 List::~List(){
 	_destructor_helper();
 	delete first;
+}
+
+/**
+ * @brief Copy assignment.
+ * 
+ * An existing list is set equal to another list by making a deep copy of it. 
+ * The copy and original are unrelated, that's change in one of them 
+ * does not affect the other.
+ * 
+ * @param other: Constant reference to the list to be copied.
+ * @return *this: the list itself. 
+ * 
+ */
+List& List::operator=(List const& other){
+	// first remove all nodes in current list
+	_destructor_helper();
+
+	// then for each node in other, make a deep copy
+	if(other.first != nullptr){
+		_constructor_helper(other.first);
+	}
+	return *this;
 }
 
 /**
@@ -169,10 +186,19 @@ void List::remove(int idx){
 	}
 }
 
+// Recursively remove all nodes of the list.
 void List::_destructor_helper(){
 	if(_size > 0){
 		remove(0);
 		_destructor_helper();
+	}
+}
+
+// Recursively insert all nodes of a list.
+void List::_constructor_helper(Node* const& node){
+	insert(node->value);
+	if (node->next != nullptr){
+		_constructor_helper(node->next);
 	}
 }
 
