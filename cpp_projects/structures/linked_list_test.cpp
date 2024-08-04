@@ -2,6 +2,16 @@
 #include "../../test/catch.hpp"
 #include <sstream>
 
+// helper function to test move constructor/assignment
+List get_list(int mode = 0){
+		List list;
+		if(mode == 0){
+			list.insert(1);
+			list.insert(2);
+		}
+		return list;
+}
+
 TEST_CASE("Test insert method"){
 	List list;
 	std::ostringstream oss{};
@@ -251,5 +261,37 @@ TEST_CASE("Test copy assignment"){
 	list4.insert(0);
 	copy4.insert(9);
 	REQUIRE_FALSE(list4.at(4) == copy4.at(4));
+}
+
+TEST_CASE("Test move constructor and assignment"){
+	// test constructing by moving empty list
+	List list1{get_list(1)};
+	REQUIRE(list1.size() == 0);
+	
+	// test constructing by moving filled list
+	List list2{get_list()};
+	REQUIRE(list2.size() == 2);
+
+	// test assigning empty list by moving empty list
+	List list3;
+	list3 = get_list(1);
+	REQUIRE(list3.size() == 0);
+
+	// test assigning empty list by moving filled list
+	List list4;
+	list4 = get_list();
+	REQUIRE(list4.size() == 2);
+
+	// test assigning filled list by moving empty list
+	List list5;
+	list5.insert(0);
+	list5 = get_list(1);
+	REQUIRE(list5.size() == 0);
+
+	// test assigning filled list by moving filled list
+	List list6;
+	list6.insert(0);
+	list6 = get_list();
+	REQUIRE(list6.size() == 2);
 }
 // ============== END OF FILE ==============

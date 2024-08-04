@@ -50,6 +50,7 @@ class List{
 
 		void _destructor_helper();
 		void _constructor_helper(Node* const& node);
+		void _set_size(int s);
 };
 
 

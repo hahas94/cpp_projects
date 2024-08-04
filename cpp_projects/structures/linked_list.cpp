@@ -51,6 +51,22 @@ List::List(List const& other)
 	}
 
 /**
+ * @brief Move constructor.
+ * 
+ * Creating a list by moving memory from another list to it. The 
+ * other list is temporary and will be removed.
+ * 
+ * @param other: Reference to reference to the temporary list.
+ * 
+ */
+List::List(List&& other)
+	: first{other.first}, _size{other.size()}
+	{
+		other.first = nullptr;
+		other._set_size(0);
+	}
+
+/**
  * @brief Destructing the list, i.e. removing all nodes.
  * 
  */
@@ -78,6 +94,31 @@ List& List::operator=(List const& other){
 	if(other.first != nullptr){
 		_constructor_helper(other.first);
 	}
+	return *this;
+}
+
+/**
+ * @brief Move assignment.
+ * 
+ * An existing list is set equal to a temporary list by moving the 
+ * temporary list memory to the current list. 
+ * 
+ * @param other: Reference to reference to the temporary list.
+ * @return *this: the list itself. 
+ * 
+ */
+List& List::operator=(List&& other){
+	// remove old content
+	_destructor_helper();
+
+	// move content from other
+	first = other.first;
+	_set_size(other.size());
+
+	// prepare other for destruction
+	other.first = nullptr;
+	other._set_size(0);
+
 	return *this;
 }
 
@@ -186,22 +227,6 @@ void List::remove(int idx){
 	}
 }
 
-// Recursively remove all nodes of the list.
-void List::_destructor_helper(){
-	if(_size > 0){
-		remove(0);
-		_destructor_helper();
-	}
-}
-
-// Recursively insert all nodes of a list.
-void List::_constructor_helper(Node* const& node){
-	insert(node->value);
-	if (node->next != nullptr){
-		_constructor_helper(node->next);
-	}
-}
-
 /**
  * @brief Retrieve element at position `idx`.
  * 
@@ -225,4 +250,27 @@ int List::at(int idx) const{
 		return node->value;
 	}
 }
+
+// ---------- PRIVATE METHODS ----------
+// Recursively remove all nodes of the list.
+void List::_destructor_helper(){
+	if(_size > 0){
+		remove(0);
+		_destructor_helper();
+	}
+}
+
+// Recursively insert all nodes of a list.
+void List::_constructor_helper(Node* const& node){
+	insert(node->value);
+	if (node->next != nullptr){
+		_constructor_helper(node->next);
+	}
+}
+
+// update size of list
+void List::_set_size(int s){
+	_size = s;
+}
+
 // ============== END OF FILE ==============
