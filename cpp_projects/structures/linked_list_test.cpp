@@ -294,4 +294,35 @@ TEST_CASE("Test move constructor and assignment"){
 	list6 = get_list();
 	REQUIRE(list6.size() == 2);
 }
+
+TEST_CASE("Test nice initialization"){
+	// test constructing with sorted values
+	std::ostringstream oss1{};
+	List list1{1, 2, 3, 4, 5};
+	list1.print(oss1);
+	REQUIRE(oss1.str() == "[1, 2, 3, 4, 5]");
+	REQUIRE(list1.size() == 5);
+
+	// test constructing with reverse sorted values
+	std::ostringstream oss2{};
+	List list2{5, 4, 3, 2, 1};
+	list2.print(oss2);
+	REQUIRE(oss2.str() == "[1, 2, 3, 4, 5]");
+	REQUIRE(list2.size() == 5);
+
+	// test constructing with telescoping sorted values
+	std::ostringstream oss3{};
+	List list3{5, 1, 4, 2, 3};
+	list3.print(oss3);
+	REQUIRE(oss3.str() == "[1, 2, 3, 4, 5]");
+	REQUIRE(list3.size() == 5);
+
+	// test constructing with telescoping sorted values
+	std::ostringstream oss4{};
+	List list4{1, 5, 2, 4, 3};
+	list4.print(oss4);
+	REQUIRE(oss4.str() == "[1, 2, 3, 4, 5]");
+	REQUIRE(list4.size() == 5);
+	
+}
 // ============== END OF FILE ==============

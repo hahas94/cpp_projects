@@ -10,10 +10,13 @@
 
 #include <string>
 #include <iostream>
+#include <initializer_list>
 
 class List{
 	public:
 		List();
+
+		List(std::initializer_list<int> list);
 
 		List(List const& other);
 

@@ -33,6 +33,20 @@ List::List()
 	{}
 
 /**
+ * @brief Initializing a linked list with default values of any length.
+ * 
+ * @param list: a number of default values to initialize list with.
+ */
+List::List(std::initializer_list<int> list)
+	: first{nullptr}, _size{0}
+	{
+		for(int el : list){
+			insert(el);
+		}
+	}
+
+
+/**
  * @brief Copy constructor.
  * 
  * A new list is created by making a deep copy of an existing list. 
