@@ -35,4 +35,41 @@
 
 #include "circuit.hpp"
 
+/**
+ * Class Connection:
+ * 	This class represents a connection point object, which is an abstraction of wire
+ * 	segments within a circuit network.
+ * 	A wire has the role of moving charge from one end to the other, without having any
+ * 	resistance, therefore this class supports setting the charge and getting the charge,
+ * 	as its sole functionality.
+ * 
+ */
+
+/**
+ * @brief Initializing an connection point.
+ * 
+ */
+Connection::Connection()
+	: _charge{0} 
+	{}
+
+/**
+ * @brief Setting the charge through a connection point.
+ * 
+ * @param c: charge in Volts
+ */
+void Connection::charge(double c){
+	_charge = c;
+}
+
+/**
+ * @brief Getting the charge through a connection point.
+ * 
+ * @return the charge.
+ * 
+ */
+double Connection::charge() const{
+	return _charge;
+}
+
 // ============== END OF FILE ==============
