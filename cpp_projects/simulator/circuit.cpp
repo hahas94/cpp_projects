@@ -58,7 +58,7 @@ Connection::Connection()
  * 
  * @param c: charge in Volts
  */
-void Connection::charge(double c){
+void Connection::set_charge(double c){
 	_charge = c;
 }
 
@@ -68,8 +68,124 @@ void Connection::charge(double c){
  * @return the charge.
  * 
  */
-double Connection::charge() const{
+double Connection::get_charge() const{
 	return _charge;
 }
+
+/**
+ * Class Component:
+ * 	This class represents a Component object, which is an abstract object, because 
+ * 	some functionality is unique to each of its child classes. However, there are
+ * 	identical functionalities as well, and they are implemented here.
+ * 	
+ * 	For instance, the voltage over a component is the difference between the charge
+ * 	of its two terminals.
+ * 
+ */
+
+float Component::time_step = 0.0;  // Static variable definition of Component class
+
+/**
+ * @brief Initializing a Component object.
+ * 
+ */
+Component::Component(Connection& tA, Connection& tB, double voltage)
+	: _terminalA{tA}, _terminalB{tB}, _voltage{voltage}, _current{0}
+	{}
+
+/**
+ * @brief Getting the voltage over a component.
+ * 
+ * @return the charge.
+ * 
+ */
+double Component::get_voltage() const{
+	return _voltage;
+}
+
+/**
+ * @brief Getting the current through a component.
+ * 
+ * @return the current.
+ * 
+ */
+double Component::get_current() const{
+	return _current;
+}
+
+/**
+ * @brief Getting a reference to the smaller in charge terminal.
+ * 
+ * @return A Connection reference.
+ * 
+ */
+Connection& Component::_get_smaller_connection() const{
+	return _terminalA.get_charge() > _terminalB.get_charge() ? _terminalA : _terminalB; 
+}
+
+/**
+ * @brief Updating the voltage over a component.
+ * 
+ * The voltage over a component is defined as the difference between the voltage over 
+ * its two terminals. More specifically, it is the difference between the most positive
+ * and the least positive terminal charges.
+ * 
+ */
+void Component::_update_voltage(){
+	if(_terminalA.get_charge() > _terminalB.get_charge()){
+		_voltage = _terminalA.get_charge() - _terminalB.get_charge();
+	}
+	else{
+		_voltage = _terminalB.get_charge() - _terminalA.get_charge();
+	} 
+}
+
+/**
+ * Class Battery:
+ * 	This class represents a battery object, which has a voltage, and moves charge
+ * 	from the negative terminal to the connection point it is conneted to on that
+ * 	terminal. The positive terminal receives no charge. A battery is assumed to never
+ * 	run out.
+ * 	
+ * 	Thus a step in the simulation makes the battery to move charge to a connection.
+ * 
+ */
+
+/**
+ * @brief Initializing a battery object.
+ * 
+ * @param name: name of the battery.
+ * @param voltage: the voltage of the battery
+ * @param tA, tB: references to the connection points on each of its terminals.
+ * 
+ */
+Battery::Battery(std::string name, double voltage, Connection& tA, Connection& tB)
+	: Component(tA, tB, voltage), _name{name}
+	{}
+
+/**
+ * @brief Stepping time in a battery.
+ * 
+ * Each step the battery moves a charge equal to its voltage through the connection
+ * on its negative terminal.
+ * 
+ */
+void Battery::step(){
+	_terminalA.set_charge(get_voltage());
+}
+
+/**
+ * @brief Updating the current through a battery.
+ * 
+ * Since a battery doesn't get any charge from its positive terminal, its current
+ * will always be zero. This method is not used in the battery component, it is only
+ * there because it is a virtual function.
+ * 
+ */
+void Battery::_update_current(){
+	_current = 0;
+}
+
+
 
 // ============== END OF FILE ==============
