@@ -23,6 +23,23 @@ private:
 	double _charge;
 };
 
+class Component{
+public:
+	Component(Connection& tA, Connection& tB);
+	virtual ~Component() = default;
+
+	static float time_step;
+
+	virtual void step() = 0;
+
+protected:
+	double _voltage;
+	double _current;
+
+	Connection& _terminalA;
+	Connection& _terminalB;
+};
+
 
 #endif // CIRCUIT_HPP
 
