@@ -57,11 +57,9 @@ public:
 
 	void step() override;
 
-protected:
-	void _update_current() override;
-
 private:
 	std::string _name;	
+	void _update_current() override;
 };
 
 
