@@ -73,6 +73,40 @@ double Connection::get_charge() const{
 }
 
 /**
+ * @brief Increasing the charge through a connection point by some charge.
+ * 
+ * @param c: charge to add.
+ * @throws std::invalid_argument if the charge argument is negative.
+ * 
+ */
+void Connection::increase_charge(double c){
+	if(c < 0){
+		throw std::invalid_argument("Charge cannot be negative.");
+	}
+	_charge += c;
+}
+
+/**
+ * @brief Decreasing the charge through a connection point by some charge.
+ * 
+ * @param c: charge to remove.
+ * @throws std::invalid_argument if the charge argument is negative or 
+ *  larger than current charge.
+ * 
+ */
+void Connection::decrease_charge(double c){
+	if(c < 0){
+		throw std::invalid_argument("Charge cannot be negative.");
+	}
+
+	if(c > _charge){
+		throw std::invalid_argument("Charge too high. Will result in invalid charge.");
+	}
+
+	_charge -= c;
+}
+
+/**
  * Class Component:
  * 	This class represents a Component object, which is an abstract object, because 
  * 	some functionality is unique to each of its child classes. However, there are

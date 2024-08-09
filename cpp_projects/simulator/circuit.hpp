@@ -18,6 +18,8 @@ public:
 
 	void set_charge(double c);
 	double get_charge() const;
+	void increase_charge(double c);
+	void decrease_charge(double c);
 
 private:
 	double _charge;

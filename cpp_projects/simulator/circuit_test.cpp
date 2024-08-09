@@ -15,6 +15,18 @@ TEST_CASE("Connection: Test getter/setter"){
 
 	p.set_charge(c+1);
 	REQUIRE(p.get_charge() == c+1);
+
+	p.increase_charge(0.5);
+	REQUIRE(p.get_charge() == c+1+0.5);
+
+	p.decrease_charge(0.9);
+	REQUIRE(p.get_charge() == c+1+0.5-0.9);
+
+	// test invalid charge updates: receive error message
+	p.set_charge(0);
+	REQUIRE_THROWS_WITH(p.increase_charge(-0.5), "Charge cannot be negative.");
+	REQUIRE_THROWS_WITH(p.decrease_charge(-0.5), "Charge cannot be negative.");
+	REQUIRE_THROWS_WITH(p.decrease_charge(2), "Charge too high. Will result in invalid charge.");
 }
 
 // --- Class Battery ---
