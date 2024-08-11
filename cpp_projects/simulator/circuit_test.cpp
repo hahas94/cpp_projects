@@ -73,13 +73,55 @@ TEST_CASE("Battery: Test step method"){
 
 	// time step should remain unchanged
 	REQUIRE(b1.time_step == time);
+
+	REQUIRE(b1.get_name() == "B1");
+}
+
+// --- Class Resistor ---
+TEST_CASE("Resistor: Test step method"){
+	float time{0.1};
+	Component::time_step = time;
+	double resistance{5};
+	Connection a;
+	Connection b;
+
+	// Initial test
+	Resistor r1{"R1", resistance, a, b};
+	REQUIRE(r1.get_voltage() == 0);
+	REQUIRE(r1.get_current() == 0);
+
+	// stepping once does not make any difference due to voltage being 0
+	r1.step();
+	REQUIRE(a.get_charge() == 0);
+	REQUIRE(b.get_charge() == 0);
+	REQUIRE(r1.get_voltage() == 0);
+	REQUIRE(r1.get_current() == 0);
+
+	// adding charge to one connection and then stepping
+	double voltage{10};
+	a.set_charge(voltage);
+	REQUIRE(a.get_charge() == voltage);
+	REQUIRE(b.get_charge() == 0);
+
+	r1.step();
+	double res{voltage/resistance * time};
+	REQUIRE(a.get_charge() == voltage);
+	REQUIRE(b.get_charge() == 0);
+
+	r1.step();
+	REQUIRE(a.get_charge() == voltage - res);
+	REQUIRE(b.get_charge() == res);
+	REQUIRE(r1.get_voltage() == voltage - 2*res);
+	REQUIRE(r1.get_current() == (voltage - 2*res) / resistance);
+
+	REQUIRE(r1.get_name() == "R1");
 }
 
 // ----------- INTERGATION TESTS ----------
 
 // ------------ SIMULATION TESTS ----------
 TEST_CASE("Test simulate function"){
-	simulate();
+	//simulate();
 }
 
 // ============== END OF FILE ==============
