@@ -64,6 +64,20 @@ private:
 	void _update_current() override;
 };
 
+class Resistor : public Component{
+public:
+	Resistor(std::string name, double resistance, Connection& tA, Connection& tB);
+
+	void step() override;
+
+private:
+	std::string _name;
+	double _resistance;
+
+	void _update_current() override;
+};
+
+void simulate();
 
 #endif // CIRCUIT_HPP
 

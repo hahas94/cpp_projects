@@ -148,16 +148,6 @@ double Component::get_current() const{
 }
 
 /**
- * @brief Getting a reference to the smaller in charge terminal.
- * 
- * @return A Connection reference.
- * 
- */
-Connection& Component::_get_smaller_connection() const{
-	return _terminalA.get_charge() > _terminalB.get_charge() ? _terminalA : _terminalB; 
-}
-
-/**
  * @brief Updating the voltage over a component.
  * 
  * The voltage over a component is defined as the difference between the voltage over 
@@ -240,6 +230,49 @@ void Battery::_update_current(){
 	_current = 0;
 }
 
+/**
+ * Class Resistor:
+ * 	This class represents a resistor object, which has a resistance, a voltage
+ * 	over it, and moves charge from one connection to the other connection point it
+ * 	is conneted to. The function of a resistor is to restrict the flow of charge in
+ * 	order to prevent overheat, for instance.
+ * 	
+ * 	Thus a step in the simulation makes the resistor to move charge from its most positively 
+ * 	charged terminal to the least charged, where the moved charge is proportional to the voltage
+ * 	over it, the resistance and the time step used.
+ * 
+ */
+
+/**
+ * @brief Initializing a resistor object.
+ * 
+ * @param name: name of the resistor.
+ * @param resistance: the resistance of the resistor, in Ohm.
+ * @param tA, tB: references to the connection points on each of its terminals.
+ * 
+ */
+Resistor::Resistor(std::string name, double resistance, Connection& tA, Connection& tB)
+	: Component(tA, tB), _name{name}, _resistance{resistance}
+	{}
+
+/**
+ * @brief Stepping time in a resistor.
+ * 
+ * Each step the resistor moves some charge forward but by restsricting the incoming charge.
+ * 
+ */
+void Resistor::step(){
+	double charge_to_move{(_voltage / _resistance) * time_step};
+	_update_connections_charges(charge_to_move);
+
+	_update_voltage();
+	_update_current();
+}
+
+// current over a resistor is the voltage over it divided by its resistance.
+void Resistor::_update_current(){
+	_current = _voltage / _resistance;
+}
 
 
 // ============== END OF FILE ==============
