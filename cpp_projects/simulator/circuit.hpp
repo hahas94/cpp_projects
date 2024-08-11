@@ -46,11 +46,11 @@ protected:
 	double _voltage;
 	double _current;
 
-	Connection& _get_smaller_connection() const;
-
 	void _update_voltage();
 
 	virtual void _update_current() = 0;
+
+	void _update_connections_charges(double c);
 };
 
 class Battery : public Component{

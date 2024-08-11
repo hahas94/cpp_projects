@@ -175,6 +175,25 @@ void Component::_update_voltage(){
 }
 
 /**
+ * @brief Updating the charge of the connections.
+ * 
+ * The voltage over a component is defined as the difference between the voltage over 
+ * its two terminals. More specifically, it is the difference between the most positive
+ * and the least positive terminal charges.
+ * 
+ */
+void Component::_update_connections_charges(double c){
+	if(_terminalA.get_charge() > _terminalB.get_charge()){
+		_terminalA.decrease_charge(c);
+		_terminalB.increase_charge(c);
+	}
+	else{
+		_terminalA.increase_charge(c);
+		_terminalB.decrease_charge(c);
+	}
+}
+
+/**
  * Class Battery:
  * 	This class represents a battery object, which has a voltage, and moves charge
  * 	from the negative terminal to the connection point it is conneted to on that
