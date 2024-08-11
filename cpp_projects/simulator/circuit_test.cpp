@@ -77,4 +77,9 @@ TEST_CASE("Battery: Test step method"){
 
 // ----------- INTERGATION TESTS ----------
 
+// ------------ SIMULATION TESTS ----------
+TEST_CASE("Test simulate function"){
+	simulate();
+}
+
 // ============== END OF FILE ==============
