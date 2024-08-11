@@ -123,8 +123,8 @@ float Component::time_step = 0.0;  // Static variable definition of Component cl
  * @brief Initializing a Component object.
  * 
  */
-Component::Component(Connection& tA, Connection& tB, double voltage)
-	: _terminalA{tA}, _terminalB{tB}, _voltage{voltage}, _current{0}
+Component::Component(std::string name, Connection& tA, Connection& tB, double voltage)
+	: _name{name}, _terminalA{tA}, _terminalB{tB}, _voltage{voltage}, _current{0}
 	{}
 
 /**
@@ -145,6 +145,10 @@ double Component::get_voltage() const{
  */
 double Component::get_current() const{
 	return _current;
+}
+
+std::string Component::get_name(){
+	return _name;
 }
 
 /**
@@ -203,7 +207,7 @@ void Component::_update_connections_charges(double c){
  * 
  */
 Battery::Battery(std::string name, double voltage, Connection& tA, Connection& tB)
-	: Component(tA, tB, voltage), _name{name}
+	: Component(name, tA, tB, voltage)
 	{}
 
 /**
@@ -252,7 +256,7 @@ void Battery::_update_current(){
  * 
  */
 Resistor::Resistor(std::string name, double resistance, Connection& tA, Connection& tB)
-	: Component(tA, tB), _name{name}, _resistance{resistance}
+	: Component(name, tA, tB), _resistance{resistance}
 	{}
 
 /**

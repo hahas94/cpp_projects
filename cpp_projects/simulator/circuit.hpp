@@ -27,7 +27,7 @@ private:
 
 class Component{
 public:
-	Component(Connection& tA, Connection& tB, double voltage = 0);
+	Component(std::string name, Connection& tA, Connection& tB, double voltage = 0);
 	
 	virtual ~Component() = default;
 
@@ -39,7 +39,10 @@ public:
 	
 	double get_current() const;
 
+	std::string get_name();
+
 protected:
+	std::string _name;
 	Connection& _terminalA;
 	Connection& _terminalB;
 
@@ -60,7 +63,6 @@ public:
 	void step() override;
 
 private:
-	std::string _name;	
 	void _update_current() override;
 };
 
@@ -71,7 +73,6 @@ public:
 	void step() override;
 
 private:
-	std::string _name;
 	double _resistance;
 
 	void _update_current() override;
