@@ -225,6 +225,7 @@ Battery::Battery(std::string name, double voltage, Connection& tA, Connection& t
  */
 void Battery::step(){
 	_terminalA.set_charge(get_voltage());
+	_terminalB.set_charge(0.0);
 }
 
 /**
