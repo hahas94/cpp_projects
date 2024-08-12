@@ -78,6 +78,19 @@ private:
 	void _update_current() override;
 };
 
+class Capacitor : public Component{
+public:
+	Capacitor(std::string name, double capacitance, Connection& tA, Connection& tB);
+
+	void step() override;
+
+private:
+	double _capacitance;
+	double _charge_stored;
+
+	void _update_current() override;
+};
+
 void simulate();
 
 #endif // CIRCUIT_HPP

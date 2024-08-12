@@ -33,6 +33,7 @@
  * 
  * 	*/
 
+#include <iostream>
 #include "circuit.hpp"
 
 /**
@@ -273,10 +274,48 @@ void Resistor::step(){
 	_update_current();
 }
 
-// current over a resistor is the voltage over it divided by its resistance.
+// current through a resistor is the voltage over it divided by its resistance.
 void Resistor::_update_current(){
 	_current = _voltage / _resistance;
 }
 
+/**
+ * Class Capacitor:
+ * 	This class represents a capacitor object, which has a capacitance, a voltage
+ * 	over it, and moves charge from one connection to the other connection point it
+ * 	is conneted to. Additionally it will store some of the charge flowing through it
+ * 	in order to use it temporarily if the flow is stopped.
+ * 
+ */
 
+/**
+ * @brief Initializing a capacitor object.
+ * 
+ * @param name: name of the capacitor.
+ * @param capacitance: the capacitance of the resistor, in Ohm.
+ * @param tA, tB: references to the connection points on each of its terminals.
+ * 
+ */
+Capacitor::Capacitor(std::string name, double capacitance, Connection& tA, Connection& tB)
+	: Component(name, tA, tB), _capacitance{capacitance}, _charge_stored{0}
+	{}
+
+/**
+ * @brief Stepping time in a capacitor.
+ * 
+ * Each step the resistor moves some charge forward and stores some of it as well.
+ * 
+ */
+void Capacitor::step(){
+	double charge_to_store{_capacitance * (_voltage - _charge_stored) * time_step};
+	_update_connections_charges(charge_to_store);
+	_charge_stored += charge_to_store;
+	_update_voltage();
+	_update_current();
+}
+
+// current through a capacitor is C(V − L), C capacitance, V voltage, L charge.
+void Capacitor::_update_current(){
+	_current = _capacitance * (_voltage - _charge_stored);
+}
 // ============== END OF FILE ==============
