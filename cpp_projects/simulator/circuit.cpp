@@ -34,6 +34,7 @@
  * 	*/
 
 #include <iostream>
+#include <iomanip> 
 #include "circuit.hpp"
 
 /**
@@ -317,5 +318,108 @@ void Capacitor::step(){
 // current through a capacitor is C(V − L), C capacitance, V voltage, L charge.
 void Capacitor::_update_current(){
 	_current = _capacitance * (_voltage - _charge_stored);
+}
+
+/**
+ * Class Circuit:
+ * 	This class represents a circuit network, where it has a list of components 
+ * 	and can step each component. 
+ * 
+ */
+
+/**
+ * @brief Initializing an empty circuit.
+ * 
+ */
+Circuit::Circuit()
+	: _list{}
+	{}
+
+/**
+ * @brief Destructing a circuit.
+ * 
+ */
+Circuit::~Circuit(){
+	for(Component* el : _list){
+		delete el;
+	}
+}
+
+/**
+ * @brief Initializing circuit with variable number of components.
+ * 
+ * @param list: a number of components objects.
+ */
+Circuit::Circuit(std::initializer_list<Component*> list)
+	: _list{}
+{
+	for(Component* el : list){
+		_list.push_back(el);
+	}
+}
+
+/**
+ * @brief Stepping a circuit network.
+ * 
+ * All components are stepped once.
+ * 
+ */
+void Circuit::step(){
+	for(Component* el : _list){
+		el->step();
+	}
+}
+
+/**
+ * @brief Printing the titles and subtitles for the simulation.
+ * 
+ */ 
+void Circuit::print_titles(){
+	_print_top_titles();
+	_print_sub_titles();
+}
+
+/**
+ * @brief Printing all component's voltage and current at the moment.
+ * 
+ */
+void Circuit::step_print() const{
+	std::cout << std::fixed << std::setprecision(2);
+	for(Component* el : _list){
+		std::cout << std::setw(6) << el->get_voltage() << std::setw(6) << el->get_current();
+	}
+}
+
+/**
+ * @brief Adding a new component to the circuit.
+ * 
+ * @param comp: pointer to component to add.
+ * 
+ */
+void Circuit::add_component(Component* comp){
+	_list.push_back(comp);
+}
+
+/**
+ * @brief Getting the list of components.
+ * 
+ * @return std::vector<Component*>
+ */
+const std::vector<Component*>& Circuit::get_list() const{
+	return _list;
+}
+
+void Circuit::_print_top_titles() const{
+	for(Component* el : _list){
+		std::cout << std::setw(12) << el->get_name();
+	}
+	std::cout << std::endl;
+}
+
+void Circuit::_print_sub_titles() const{
+	for(long unsigned int i{0}; i < _list.size(); i++){
+		std::cout << std::setw(6) << "Volt" << std::setw(6) << "Curr";
+	}
+	std::cout << std::endl;
 }
 // ============== END OF FILE ==============

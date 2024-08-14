@@ -11,6 +11,7 @@
 #include <string>
 #include <iostream>
 #include <initializer_list>
+#include <vector>
 
 class Connection{
 public:
@@ -59,6 +60,7 @@ protected:
 class Battery : public Component{
 public:
 	Battery(std::string name, double voltage, Connection& tA, Connection& tB);
+	~Battery();
 
 	void step() override;
 
@@ -69,6 +71,7 @@ private:
 class Resistor : public Component{
 public:
 	Resistor(std::string name, double resistance, Connection& tA, Connection& tB);
+	~Resistor();
 
 	void step() override;
 
@@ -81,6 +84,7 @@ private:
 class Capacitor : public Component{
 public:
 	Capacitor(std::string name, double capacitance, Connection& tA, Connection& tB);
+	~Capacitor();
 
 	void step() override;
 
@@ -89,6 +93,31 @@ private:
 	double _charge_stored;
 
 	void _update_current() override;
+};
+
+class Circuit{
+public:
+	Circuit();
+
+	Circuit(std::initializer_list<Component*> list);
+
+	~Circuit();
+
+	void step();
+
+	void print_titles();
+
+	void step_print() const;
+
+	void add_component(Component* comp);
+
+	const std::vector<Component*>& get_list() const;
+
+private:
+	std::vector<Component*> _list;
+
+	void _print_top_titles() const;
+	void _print_sub_titles() const;
 };
 
 void simulate();
