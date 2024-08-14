@@ -60,7 +60,6 @@ protected:
 class Battery : public Component{
 public:
 	Battery(std::string name, double voltage, Connection& tA, Connection& tB);
-	~Battery();
 
 	void step() override;
 
@@ -71,7 +70,6 @@ private:
 class Resistor : public Component{
 public:
 	Resistor(std::string name, double resistance, Connection& tA, Connection& tB);
-	~Resistor();
 
 	void step() override;
 
@@ -84,7 +82,6 @@ private:
 class Capacitor : public Component{
 public:
 	Capacitor(std::string name, double capacitance, Connection& tA, Connection& tB);
-	~Capacitor();
 
 	void step() override;
 
