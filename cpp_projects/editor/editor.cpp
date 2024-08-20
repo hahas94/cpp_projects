@@ -71,4 +71,19 @@ std::vector<std::pair<std::string, int>> sort_table_by_keys(std::unordered_map<s
 	return key_sorted_vector;
 }
 
+/**
+ * @brief Create and return a sorted vector of pairs, sorted by second element.
+ * 
+ * @param table: A table of words as keys and their frequencies as value.
+ * @return a vector of (word, frequency) pairs, sorted by frequency.
+ */
+std::vector<std::pair<std::string, int>> sort_table_by_values(std::unordered_map<std::string, int> const& table){
+	std::vector<std::pair<std::string, int>> value_sorted_vector(table.begin(), table.end());
+	std::sort(value_sorted_vector.begin(), value_sorted_vector.end(), [](auto const& pair1, auto const& pair2){
+		return pair1.second > pair2.second;
+	});
+
+	return value_sorted_vector;
+}
+
 // ============== END OF FILE ==============

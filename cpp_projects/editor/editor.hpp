@@ -19,6 +19,8 @@ std::unordered_map<std::string, int> create_frequency_table(std::vector<std::str
 
 std::vector<std::pair<std::string, int>> sort_table_by_keys(std::unordered_map<std::string, int> const& table);
 
+std::vector<std::pair<std::string, int>> sort_table_by_values(std::unordered_map<std::string, int> const& table);
+
 #endif // EDITOR_HPP
 
 // ============== END OF FILE ==============
