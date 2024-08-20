@@ -54,16 +54,6 @@ long unsigned int _max_word_length(std::vector<std::pair<std::string, int>> cons
 	return max_length;
 }
 
-// given an argument, split it into three parts, and return them as a vector.
-// the parts are the flag, and possibly one or two parameters.
-std::vector<std::string> _parse_argument(std::string const& arg){
-	std::pair<std::string, std::string> pair1{split_string(arg, '=')};
-	std::pair<std::string, std::string> pair2{split_string(pair1.second, '+')};
-	std::vector<std::string> parts{pair1.first, pair2.first, pair2.second};
-
-	return parts;
-}
-
 // ------------------- PUBLIC FUNCTIONS -------------------
 
 /**
@@ -176,6 +166,23 @@ std::pair<std::string, std::string> split_string(std::string const& str, char sp
 	std::pair<std::string, std::string> pair{left, right};
 
 	return pair;
+}
+
+/**
+ * @brief Partition an argument into three pieces and return them in a vector.
+ * 
+ * The parts are the flag, and possibly one or two non-empty parameters.
+ * If some parameter don't exist, then it is represented as an empty string.
+ * 
+ * @param arg: a command-line argument.
+ * @return vector of strings resulted from partitioning.
+ */
+std::vector<std::string> parse_argument(std::string const& arg){
+	std::pair<std::string, std::string> pair1{split_string(arg, '=')};
+	std::pair<std::string, std::string> pair2{split_string(pair1.second, '+')};
+	std::vector<std::string> parts{pair1.first, pair2.first, pair2.second};
+
+	return parts;
 }
 
 /**

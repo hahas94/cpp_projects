@@ -29,6 +29,8 @@ std::pair<std::string, std::string> split_string(std::string const& str, char sp
 
 bool is_argument_valid(std::string const& arg);
 
+std::vector<std::string> _parse_argument(std::string const& arg);
+
 #endif // EDITOR_HPP
 
 // ============== END OF FILE ==============
