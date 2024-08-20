@@ -108,7 +108,8 @@ std::vector<std::pair<std::string, int>> sort_table_by_values(std::unordered_map
 /**
  * @brief Print a frequency table, sorted by key.
  * 
- * First the table is sorted, then printed. The keys are left-aligned.
+ * First the table is sorted, then printed. The keys are left-aligned 
+ * and sorted in descending order.
  * 
  * @param table: an unordered map of words and their frequencies.
  * @param os: an output stream, by default std::cout is used.
@@ -119,6 +120,24 @@ void print_table(std::unordered_map<std::string, int> const& table, std::ostream
 	
 	std::for_each(sorted_vector.begin(), sorted_vector.end(), [&os, &max_length](auto const& pair)
 		{os << std::left << std::setw(max_length + 1) << pair.first << pair.second << "\n";
+	});
+}
+
+/**
+ * @brief Print a frequency table, sorted by value.
+ * 
+ * First the table is sorted, then printed. The keys are right-aligned 
+ * and sorted in descending order.
+ * 
+ * @param table: an unordered map of words and their frequencies.
+ * @param os: an output stream, by default std::cout is used.
+ */
+void print_frequency(std::unordered_map<std::string, int> const& table, std::ostream& os = std::cout){
+	std::vector<std::pair<std::string, int>> sorted_vector{sort_table_by_values(table)};
+	long unsigned int max_length{_max_word_length(sorted_vector)};
+	
+	std::for_each(sorted_vector.begin(), sorted_vector.end(), [&os, &max_length](auto const& pair)
+		{os << std::right << std::setw(max_length) << pair.first << " " << pair.second << "\n";
 	});
 }
 
