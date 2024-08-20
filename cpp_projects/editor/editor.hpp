@@ -11,9 +11,11 @@
 #include <iostream>
 #include <string>
 #include <vector>
-#include <map>
+#include <unordered_map>
 
 void print_text(std::vector<std::string> const& text_vector, std::ostream& os = std::cout);
+
+std::unordered_map<std::string, int> create_frequency_table(std::vector<std::string> const& text_vector);
 
 #endif // EDITOR_HPP
 

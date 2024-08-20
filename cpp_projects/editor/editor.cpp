@@ -29,10 +29,12 @@
  * 	*/
 
 #include <iostream>
+#include <iomanip>
 #include <string>
 #include <vector>
-#include <map>
+#include <unordered_map>
 #include <iterator>
+#include <algorithm>
 
 /**
  * @brief Print all words in a vector, separated by space.
@@ -44,5 +46,17 @@ void print_text(std::vector<std::string> const& text_vector, std::ostream& os){
 	std::copy(text_vector.begin(), text_vector.end(), std::ostream_iterator<std::string>{os, " "});
 }
 
+/**
+ * @brief Create and return an unordered frequency dictionary of all words in a vector.
+ * 
+ * @param text_vector: constant referense to a vector of words.
+ * @return table: a table of `word`:`frequency` pairs.
+ */
+std::unordered_map<std::string, int> create_frequency_table(std::vector<std::string> const& text_vector){
+	std::unordered_map<std::string, int> table{};
+	std::for_each(text_vector.begin(), text_vector.end(), [&table](std::string const& word){table[word]++;});
+
+	return table;
+}
 
 // ============== END OF FILE ==============
