@@ -56,16 +56,6 @@ long unsigned int _max_word_length(std::vector<std::pair<std::string, int>> cons
 // -------------- PUBLIC FUNCTIONS --------------
 
 /**
- * @brief Print all words in a vector, separated by space.
- * 
- * @param text_vector: constant referense to a vector of words.
- * @param os: an output stream, by default std::cout is used.
- */
-void print_text(std::vector<std::string> const& text_vector, std::ostream& os){
-	std::copy(text_vector.begin(), text_vector.end(), std::ostream_iterator<std::string>{os, " "});
-}
-
-/**
  * @brief Create and return an unordered frequency dictionary of all words in a vector.
  * 
  * @param text_vector: constant referense to a vector of words.
@@ -103,6 +93,16 @@ std::vector<std::pair<std::string, int>> sort_table_by_values(std::unordered_map
 	});
 
 	return value_sorted_vector;
+}
+
+/**
+ * @brief Print all words in a vector, separated by space.
+ * 
+ * @param text_vector: constant referense to a vector of words.
+ * @param os: an output stream, by default std::cout is used.
+ */
+void print_text(std::vector<std::string> const& text_vector, std::ostream& os){
+	std::copy(text_vector.begin(), text_vector.end(), std::ostream_iterator<std::string>{os, " "});
 }
 
 /**
