@@ -21,6 +21,8 @@ std::vector<std::pair<std::string, int>> sort_table_by_keys(std::unordered_map<s
 
 std::vector<std::pair<std::string, int>> sort_table_by_values(std::unordered_map<std::string, int> const& table);
 
+void print_table(std::unordered_map<std::string, int> const& table, std::ostream& os = std::cout);
+
 #endif // EDITOR_HPP
 
 // ============== END OF FILE ==============

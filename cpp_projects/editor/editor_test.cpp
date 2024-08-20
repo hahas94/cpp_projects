@@ -131,4 +131,27 @@ TEST_CASE("Test sort_table_by_values() function"){
 	REQUIRE(sorted_vector5.at(2).second == 1);
 }
 
+TEST_CASE("Test print_table() function"){
+	// empty vector
+	std::vector<std::string> empty_text{};
+	std::unordered_map<std::string, int> empty_text_frequency{create_frequency_table(empty_text)};
+	std::ostringstream oss{};
+	print_table(empty_text_frequency, oss);
+	REQUIRE(oss.str() == "");
+
+	// onve-word vector
+	std::vector<std::string> one_word_text{"one_word"};
+	std::unordered_map<std::string, int> one_word_text_frequency{create_frequency_table(one_word_text)};
+	std::ostringstream oss1{};
+	print_table(one_word_text_frequency, oss1);
+	REQUIRE(oss1.str() == "one_word 1\n");
+
+	// // three unique words vector
+	std::vector<std::string> three_words_text{"first", "second", "third"};
+	std::unordered_map<std::string, int> three_words_text_frequency{create_frequency_table(three_words_text)};
+	std::ostringstream oss3{};
+	print_table(three_words_text_frequency, oss3);
+	REQUIRE(oss3.str() == "first  1\nsecond 1\nthird  1\n");	
+
+}
 // ============== END OF FILE ==============

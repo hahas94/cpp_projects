@@ -36,6 +36,25 @@
 #include <iterator>
 #include <algorithm>
 
+// -------------- PRIVATE FUNCTIONS --------------
+
+// get the length of the longest string in list of pairs of <strings, int>
+long unsigned int _max_word_length(std::vector<std::pair<std::string, int>> const& pairs_vector){
+	auto it{std::max_element(pairs_vector.begin(), pairs_vector.end(), [](auto const& a, auto const& b){
+		return a.first.size() < b.first.size();
+	})};
+
+	long unsigned int max_length{0};
+
+	if(it != pairs_vector.end()){
+		max_length = (*it).first.size();
+	}
+
+	return max_length;
+}
+
+// -------------- PUBLIC FUNCTIONS --------------
+
 /**
  * @brief Print all words in a vector, separated by space.
  * 
@@ -84,6 +103,23 @@ std::vector<std::pair<std::string, int>> sort_table_by_values(std::unordered_map
 	});
 
 	return value_sorted_vector;
+}
+
+/**
+ * @brief Print a frequency table, sorted by key.
+ * 
+ * First the table is sorted, then printed. The keys are left-aligned.
+ * 
+ * @param table: an unordered map of words and their frequencies.
+ * @param os: an output stream, by default std::cout is used.
+ */
+void print_table(std::unordered_map<std::string, int> const& table, std::ostream& os){
+	std::vector<std::pair<std::string, int>> sorted_vector{sort_table_by_keys(table)};
+	long unsigned int max_length{_max_word_length(sorted_vector)};
+	
+	std::for_each(sorted_vector.begin(), sorted_vector.end(), [&os, &max_length](auto const& pair)
+		{os << std::left << std::setw(max_length + 1) << pair.first << pair.second << "\n";
+	});
 }
 
 // ============== END OF FILE ==============
