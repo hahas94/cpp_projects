@@ -35,6 +35,9 @@
 #include <unordered_map>
 #include <iterator>
 #include <algorithm>
+#include "editor.hpp"
+
+// ------------------- PRIVATE FUNCTIONS -------------------
 
 // get the length of the longest string in list of pairs of <strings, int>
 long unsigned int _max_word_length(std::vector<std::pair<std::string, int>> const& pairs_vector){
@@ -50,6 +53,18 @@ long unsigned int _max_word_length(std::vector<std::pair<std::string, int>> cons
 
 	return max_length;
 }
+
+// given an argument, split it into three parts, and return them as a vector.
+// the parts are the flag, and possibly one or two parameters.
+std::vector<std::string> _parse_argument(std::string const& arg){
+	std::pair<std::string, std::string> pair1{split_string(arg, '=')};
+	std::pair<std::string, std::string> pair2{split_string(pair1.second, '+')};
+	std::vector<std::string> parts{pair1.first, pair2.first, pair2.second};
+
+	return parts;
+}
+
+// ------------------- PUBLIC FUNCTIONS -------------------
 
 /**
  * @brief Create and return an unordered frequency dictionary of all words in a vector.
@@ -128,7 +143,7 @@ void print_table(std::unordered_map<std::string, int> const& table, std::ostream
  * @param table: an unordered map of words and their frequencies.
  * @param os: an output stream, by default std::cout is used.
  */
-void print_frequency(std::unordered_map<std::string, int> const& table, std::ostream& os = std::cout){
+void print_frequency(std::unordered_map<std::string, int> const& table, std::ostream& os){
 	std::vector<std::pair<std::string, int>> sorted_vector{sort_table_by_values(table)};
 	long unsigned int max_length{_max_word_length(sorted_vector)};
 	
@@ -163,21 +178,11 @@ std::pair<std::string, std::string> split_string(std::string const& str, char sp
 	return pair;
 }
 
-// given an argument, split it into three parts, and return them as a vector.
-// the parts are the flag, and possibly one or two parameters.
-std::vector<std::string> _parse_argument(std::string const& arg){
-	std::pair<std::string, std::string> pair1{split_string(arg, '=')};
-	std::pair<std::string, std::string> pair2{split_string(pair1.second, '+')};
-	std::vector<std::string> parts{pair1.first, pair2.first, pair2.second};
-
-	return parts;
-}
-
 /**
  * @brief Check whether an argument is valid.
  * 
- * @param arg: an unordered map of words and their frequencies.
- * @return true for valid arg else false.
+ * @param arg: a command-line argument.
+ * @return true for valid argument else false.
  */
 bool is_argument_valid(std::string const& arg){
 	if(arg == "--print" || arg == "--table" || arg == "--frequency"){
