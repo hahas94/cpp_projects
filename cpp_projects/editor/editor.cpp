@@ -59,4 +59,16 @@ std::unordered_map<std::string, int> create_frequency_table(std::vector<std::str
 	return table;
 }
 
+/**
+ * @brief Create and return a sorted vector of pairs, sorted by first element.
+ * 
+ * @param table: A table of words as keys and their frequencies as value.
+ * @return a vector of (word, frequency) pairs, sorted by word.
+ */
+std::vector<std::pair<std::string, int>> sort_table_by_keys(std::unordered_map<std::string, int> const& table){
+	std::vector<std::pair<std::string, int>> key_sorted_vector(table.begin(), table.end());
+	std::sort(key_sorted_vector.begin(), key_sorted_vector.end());
+	return key_sorted_vector;
+}
+
 // ============== END OF FILE ==============
