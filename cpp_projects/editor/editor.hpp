@@ -25,6 +25,10 @@ void print_table(std::unordered_map<std::string, int> const& table, std::ostream
 
 void print_frequency(std::unordered_map<std::string, int> const& table, std::ostream& os = std::cout);
 
+std::pair<std::string, std::string> split_string(std::string const& str, char split_char);
+
+bool is_argument_valid(std::string const& arg);
+
 #endif // EDITOR_HPP
 
 // ============== END OF FILE ==============

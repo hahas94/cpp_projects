@@ -36,8 +36,6 @@
 #include <iterator>
 #include <algorithm>
 
-// -------------- PRIVATE FUNCTIONS --------------
-
 // get the length of the longest string in list of pairs of <strings, int>
 long unsigned int _max_word_length(std::vector<std::pair<std::string, int>> const& pairs_vector){
 	auto it{std::max_element(pairs_vector.begin(), pairs_vector.end(), [](auto const& a, auto const& b){
@@ -52,8 +50,6 @@ long unsigned int _max_word_length(std::vector<std::pair<std::string, int>> cons
 
 	return max_length;
 }
-
-// -------------- PUBLIC FUNCTIONS --------------
 
 /**
  * @brief Create and return an unordered frequency dictionary of all words in a vector.
@@ -139,6 +135,68 @@ void print_frequency(std::unordered_map<std::string, int> const& table, std::ost
 	std::for_each(sorted_vector.begin(), sorted_vector.end(), [&os, &max_length](auto const& pair)
 		{os << std::right << std::setw(max_length) << pair.first << " " << pair.second << "\n";
 	});
+}
+
+/**
+ * @brief Split a string into two pieces by some character, return both pieces.
+ * 
+ * @param str: a string.
+ * @param split_char: the character to split the string by.
+ * @return pair of strings resulted from splitting.
+ */
+std::pair<std::string, std::string> split_string(std::string const& str, char split_char){
+	std::string left{};
+	std::string right{};
+
+	if(str.contains(split_char)){
+		long unsigned int pos{str.find(split_char)};
+		left = str.substr(0, pos);
+		right = str.substr(pos+1, str.size());
+	}
+	else{
+		left = str;
+		right = "";
+	}
+
+	std::pair<std::string, std::string> pair{left, right};
+
+	return pair;
+}
+
+// given an argument, split it into three parts, and return them as a vector.
+// the parts are the flag, and possibly one or two parameters.
+std::vector<std::string> _parse_argument(std::string const& arg){
+	std::pair<std::string, std::string> pair1{split_string(arg, '=')};
+	std::pair<std::string, std::string> pair2{split_string(pair1.second, '+')};
+	std::vector<std::string> parts{pair1.first, pair2.first, pair2.second};
+
+	return parts;
+}
+
+/**
+ * @brief Check whether an argument is valid.
+ * 
+ * @param arg: an unordered map of words and their frequencies.
+ * @return true for valid arg else false.
+ */
+bool is_argument_valid(std::string const& arg){
+	if(arg == "--print" || arg == "--table" || arg == "--frequency"){
+		return true;
+	}
+
+	std::vector<std::string> parts{_parse_argument(arg)};
+
+	if (parts.at(0) == "--remove"){
+		return (parts.at(0) + "=" + parts.at(1) == arg) && (parts.at(1).size() > 0) && (parts.at(2).size() == 0);
+	}
+		
+	if (parts.at(0) == "--sustitute"){
+		return (parts.at(0) + "=" + parts.at(1) + "+" + parts.at(2) == arg) && 
+												   (parts.at(1).size() > 0) && 
+												   (parts.at(2).size() > 0);
+	}
+
+	return false;
 }
 
 // ============== END OF FILE ==============

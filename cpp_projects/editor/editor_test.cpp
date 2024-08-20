@@ -176,4 +176,109 @@ TEST_CASE("Test print_frequency() function"){
 	print_frequency(three_words_text_frequency, oss3);
 	REQUIRE(oss3.str() == " third 1\nsecond 1\n first 1\n");	
 }
+
+TEST_CASE("Test split_string() function"){
+	// empty string, should return two empty strings
+	std::string s1{""};
+	std::pair<std::string, std::string> empty_res1{split_string(s1, '=')};
+	std::pair<std::string, std::string> empty_res2{split_string(s1, '+')};
+	REQUIRE(empty_res1.first == "");
+	REQUIRE(empty_res1.second == "");
+	REQUIRE(empty_res2.first == "");
+	REQUIRE(empty_res2.second == "");
+
+	// only right part available
+	std::string s2{"--print"};
+	std::pair<std::string, std::string> res2{split_string(s2, '=')};
+	REQUIRE(res2.first == "--print");
+	REQUIRE(res2.second == "");
+
+	// only left part available
+	std::string s3{"--=print"};
+	std::pair<std::string, std::string> res3{split_string(s3, '=')};
+	REQUIRE(res3.first == "--");
+	REQUIRE(res3.second == "print");
+
+	// both left and right parts are available
+	std::string s4{"--remove=word"};
+	std::pair<std::string, std::string> res4{split_string(s4, '=')};
+	REQUIRE(res4.first == "--remove");
+	REQUIRE(res4.second == "word");
+
+	// get both flag and parameters
+	std::string s5{"--substitute=word+WORD"};
+	std::pair<std::string, std::string> res5{split_string(s5, '=')};
+	std::pair<std::string, std::string> res5_params{split_string(res5.second, '+')};
+	REQUIRE(res5.first == "--substitute");
+	REQUIRE(res5.second == "word+WORD");
+	REQUIRE(res5_params.first == "word");
+	REQUIRE(res5_params.second == "WORD");
+}
+
+TEST_CASE("Test is_argument_valid() function"){
+	// --print
+	std::string s1{"--print"};
+	REQUIRE(is_argument_valid(s1));
+	s1 = "--print=";
+	REQUIRE_FALSE(is_argument_valid(s1));
+	s1 = "--print+";
+	REQUIRE_FALSE(is_argument_valid(s1));
+	s1 = "--print=w1+w2";
+	REQUIRE_FALSE(is_argument_valid(s1));	
+
+	// --table
+	std::string s2{"--table"};
+	REQUIRE(is_argument_valid(s2));
+	s2 = "--table=";
+	REQUIRE_FALSE(is_argument_valid(s2));
+	s2 = "--table+";
+	REQUIRE_FALSE(is_argument_valid(s2));
+	s2 = "--table=w1+w2";
+	REQUIRE_FALSE(is_argument_valid(s2));	
+
+	// --frequency
+	std::string s3{"--frequency"};
+	REQUIRE(is_argument_valid(s3));
+	s3 = "--frequency=";
+	REQUIRE_FALSE(is_argument_valid(s3));
+	s3 = "--frequency+";
+	REQUIRE_FALSE(is_argument_valid(s3));
+	s3 = "--frequency=w1+w2";
+	REQUIRE_FALSE(is_argument_valid(s3));	
+
+	// --remove
+	std::string s4{"--remove=w"};
+	REQUIRE(is_argument_valid(s4));
+	s4 = "--remove=";
+	REQUIRE_FALSE(is_argument_valid(s4));
+	s4 = "--remove";
+	REQUIRE_FALSE(is_argument_valid(s4));
+	s4 = "--remove=w1+w2";
+	REQUIRE_FALSE(is_argument_valid(s4));
+
+	// --sustitute
+	std::string s5{"--sustitute=w1+w2"};
+	REQUIRE(is_argument_valid(s5));
+	s5 = "--sustitute";
+	REQUIRE_FALSE(is_argument_valid(s5));
+	s5 = "--sustitute=";
+	REQUIRE_FALSE(is_argument_valid(s5));
+	s5 = "--sustitute=w1";
+	REQUIRE_FALSE(is_argument_valid(s5));
+	s5 = "--sustitute=w1+";
+	REQUIRE_FALSE(is_argument_valid(s5));
+	s5 = "--sustitute=+";
+	REQUIRE_FALSE(is_argument_valid(s5));
+
+	// non-existing flags
+	std::string s6{""};
+	REQUIRE_FALSE(is_argument_valid(s6));
+	s6 = "-";
+	REQUIRE_FALSE(is_argument_valid(s6));
+	s6 = "--";
+	REQUIRE_FALSE(is_argument_valid(s6));
+	s6 = "--printt";
+	REQUIRE_FALSE(is_argument_valid(s6));
+}
+
 // ============== END OF FILE ==============
