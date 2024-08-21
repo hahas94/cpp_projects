@@ -9,21 +9,21 @@ TEST_CASE("Test print_text() function"){
 	std::vector<std::string> empty_text{};
 	std::ostringstream oss{};
 	print_text(empty_text, oss);
-	REQUIRE(oss.str() == "");
+	REQUIRE(oss.str() == "\n");
 	REQUIRE(empty_text.size() == 0);
 
 	// vector with one word
 	std::vector<std::string> one_word_text{"one_word"};
 	std::ostringstream oss1{};
 	print_text(one_word_text, oss1);
-	REQUIRE(oss1.str() == "one_word ");
+	REQUIRE(oss1.str() == "one_word \n");
 	REQUIRE(one_word_text.size() == 1);
 
 	// vector with three words
 	std::vector<std::string> three_words_text{"first", "second", "third"};
 	std::ostringstream oss2{};
 	print_text(three_words_text, oss2);
-	REQUIRE(oss2.str() == "first second third ");
+	REQUIRE(oss2.str() == "first second third \n");
 	REQUIRE(three_words_text.size() == 3);
 }
 
@@ -249,12 +249,16 @@ TEST_CASE("Test is_argument_valid() function"){
 	// --remove
 	std::string s4{"--remove=w"};
 	REQUIRE(is_argument_valid(s4));
+	s4 = "--remove=C++";
+	REQUIRE(is_argument_valid(s4));
 	s4 = "--remove=";
 	REQUIRE_FALSE(is_argument_valid(s4));
 	s4 = "--remove";
 	REQUIRE_FALSE(is_argument_valid(s4));
 	s4 = "--remove=w1+w2";
-	REQUIRE_FALSE(is_argument_valid(s4));
+	REQUIRE(is_argument_valid(s4));
+	s4 = "--remove=+";
+	REQUIRE(is_argument_valid(s4));
 
 	// --sustitute
 	std::string s5{"--substitute=w1+w2"};
@@ -281,4 +285,37 @@ TEST_CASE("Test is_argument_valid() function"){
 	REQUIRE_FALSE(is_argument_valid(s6));
 }
 
+TEST_CASE("Test remove_word() function"){
+	std::vector<std::string> original{};
+	std::vector<std::string> result{};
+
+	// empty vector, should return empty vector too
+	result = remove_word(original, "word");
+	REQUIRE(original.size() == 0);
+	REQUIRE(result.size() == 0);
+
+	// non-existing word, result should be identical to original
+	original = {"w1", "w2", "w3"};
+	result = remove_word(original, "word");
+	REQUIRE(original.size() == 3);
+	REQUIRE(result.size() == 3);
+	REQUIRE(original.at(0) == result.at(0));
+	REQUIRE(original.at(1) == result.at(1));
+	REQUIRE(original.at(2) == result.at(2));
+
+	// one occurrence, result should be of size one less than original
+	original = {"w1", "w2", "w3"};
+	result = remove_word(original, "w1");
+	REQUIRE(original.size() == 3);
+	REQUIRE(result.size() == 2);
+	REQUIRE(original.at(1) == result.at(0));
+	REQUIRE(original.at(2) == result.at(1));
+
+	// two occurrences, result should be of size two less than original
+	original = {"w1", "w2", "w1"};
+	result = remove_word(original, "w1");
+	REQUIRE(original.size() == 3);
+	REQUIRE(result.size() == 1);
+	REQUIRE(original.at(1) == result.at(0));
+}
 // ============== END OF FILE ==============

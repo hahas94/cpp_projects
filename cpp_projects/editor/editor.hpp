@@ -31,6 +31,8 @@ std::vector<std::string> parse_argument(std::string const& arg);
 
 bool is_argument_valid(std::string const& arg);
 
+std::vector<std::string> remove_word(std::vector<std::string> const& text, std::string const& word);
+
 #endif // EDITOR_HPP
 
 // ============== END OF FILE ==============

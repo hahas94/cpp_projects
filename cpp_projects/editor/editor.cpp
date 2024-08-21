@@ -104,6 +104,7 @@ std::vector<std::pair<std::string, int>> sort_table_by_values(std::unordered_map
  */
 void print_text(std::vector<std::string> const& text_vector, std::ostream& os){
 	std::copy(text_vector.begin(), text_vector.end(), std::ostream_iterator<std::string>{os, " "});
+	os << std::endl;
 }
 
 /**
@@ -178,9 +179,19 @@ std::pair<std::string, std::string> split_string(std::string const& str, char sp
  * @return vector of strings resulted from partitioning.
  */
 std::vector<std::string> parse_argument(std::string const& arg){
-	std::pair<std::string, std::string> pair1{split_string(arg, '=')};
-	std::pair<std::string, std::string> pair2{split_string(pair1.second, '+')};
-	std::vector<std::string> parts{pair1.first, pair2.first, pair2.second};
+	std::vector<std::string> parts(3);
+	std::pair<std::string, std::string> pair1{};
+	std::pair<std::string, std::string> pair2{};
+
+	pair1 = split_string(arg, '=');
+	
+	if(pair1.first == "--substitute"){
+		pair2 = split_string(pair1.second, '+');
+		parts = {pair1.first, pair2.first, pair2.second};
+	}
+	else{
+		parts = {pair1.first, pair1.second, ""};
+	}
 
 	return parts;
 }
@@ -209,6 +220,27 @@ bool is_argument_valid(std::string const& arg){
 	}
 
 	return false;
+}
+
+/**
+ * @brief Remove all occurrences of a word in a list of words.
+ * 
+ * A new vector is created and returned, leaving the original one unmodified.
+ * 
+ * @param text: A vector of words.
+ * @param word: The string word to be removed. 
+ * @return new vector of words.
+ */
+std::vector<std::string> remove_word(std::vector<std::string> const& text, std::string const& word){
+	std::vector<std::string> new_text(text.size());
+	std::copy(text.begin(), text.end(), new_text.begin());
+	auto it{std::remove(new_text.begin(), new_text.end(), word)};
+	
+	if(it != new_text.end()){
+		new_text.erase(it, new_text.end());
+	}
+
+	return new_text;
 }
 
 // ============== END OF FILE ==============
