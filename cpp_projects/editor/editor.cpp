@@ -243,4 +243,22 @@ std::vector<std::string> remove_word(std::vector<std::string> const& text, std::
 	return new_text;
 }
 
+/**
+ * @brief Substitutes all occurrences of a word with another word.
+ * 
+ * A new vector is created and returned, leaving the original one unmodified.
+ * 
+ * @param text: A vector of words.
+ * @param old_word: The string word to be replaced. 
+ * @param new_word: The string word to replace old word with. 
+ * @return new vector of words.
+ */
+std::vector<std::string> substitute_word(std::vector<std::string> const& text, std::string const& old_word, std::string const& new_word){
+	std::vector<std::string> new_text(text.size());
+	std::copy(text.begin(), text.end(), new_text.begin());
+	std::replace(new_text.begin(), new_text.end(), old_word, new_word);
+
+	return new_text;
+}
+
 // ============== END OF FILE ==============

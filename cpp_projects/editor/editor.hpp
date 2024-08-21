@@ -33,6 +33,8 @@ bool is_argument_valid(std::string const& arg);
 
 std::vector<std::string> remove_word(std::vector<std::string> const& text, std::string const& word);
 
+std::vector<std::string> substitute_word(std::vector<std::string> const& text, std::string const& old_word, std::string const& new_word);
+
 #endif // EDITOR_HPP
 
 // ============== END OF FILE ==============

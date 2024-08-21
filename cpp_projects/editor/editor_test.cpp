@@ -318,4 +318,41 @@ TEST_CASE("Test remove_word() function"){
 	REQUIRE(result.size() == 1);
 	REQUIRE(original.at(1) == result.at(0));
 }
+
+TEST_CASE("Test substitute_word() function"){
+	std::vector<std::string> original{};
+	std::vector<std::string> result{};
+
+	// empty vector, should return empty vector too
+	result = substitute_word(original, "word", "w");
+	REQUIRE(original.size() == 0);
+	REQUIRE(result.size() == 0);
+
+	// non-existing word, result should be identical to original
+	original = {"w1", "w2", "w3"};
+	result = substitute_word(original, "word", "w");
+	REQUIRE(original.size() == 3);
+	REQUIRE(result.size() == 3);
+	REQUIRE(original.at(0) == result.at(0));
+	REQUIRE(original.at(1) == result.at(1));
+	REQUIRE(original.at(2) == result.at(2));
+
+	// one occurrence, result should be different than original at exactly one position.
+	original = {"w1", "w2", "w3"};
+	result = substitute_word(original, "w1", "word");
+	REQUIRE(original.size() == 3);
+	REQUIRE(result.size() == 3);
+	REQUIRE(result.at(0) == "word");
+	REQUIRE(original.at(1) == result.at(1));
+	REQUIRE(original.at(2) == result.at(2));
+
+	// two occurrences, result should be different than original at exactly two positions.
+	original = {"w1", "w2", "w1"};
+	result = substitute_word(original, "w1", "word");
+	REQUIRE(original.size() == 3);
+	REQUIRE(result.size() == 3);
+	REQUIRE(result.at(0) == "word");
+	REQUIRE(result.at(2) == "word");
+	REQUIRE(original.at(1) == result.at(1));
+}
 // ============== END OF FILE ==============
