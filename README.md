@@ -41,14 +41,14 @@ Implements a library that had a linked list data structure which is always sorte
 	                --------
 	          ----->|  R   |--------
 	         |      --------        |
-	         | 						|    ---
-	   ------ 						 --> |C| -----
-	| + |    |						|    ---      |
-	| B |	 |						|			  |	
-	| -	|	 |      --------		|			  |
-	  ^		  ----->|  R   |----------			  |	
-	  |		        --------					  |	
-	   -------------------------------------------
+	         | 			|		---
+	   ------ 			--------------> |C| ----
+	| + |    |			|		---     |
+	| B |	 |			|			|	
+	  -	 |     --------		|			|
+	  ^	 ----->|  R   |----------			|	
+  	  |	       --------					|	
+ 	  -----------------------------------------------------
 
 
 ```
@@ -77,7 +77,7 @@ Optional Arguments:
   --frequencyPrint the frequency of the words sorted by the frequencies.
   --remove=<word>Remove all occurrences of <word>.
   --substitute=<old>+<new>Substitutes all occurrences of <old> with <new>.
-
+# --
 Example Usages:
   ./a.out text_file.txt --print
   ./a.out text_file.txt --remove=word --table
