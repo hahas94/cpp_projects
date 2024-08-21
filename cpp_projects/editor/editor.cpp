@@ -150,6 +150,9 @@ void print_frequency(std::unordered_map<std::string, int> const& table, std::ost
  * 
  */
 void print_help(){
+	std::string longest_string{"--substitute=<old>+<new>"};
+	long unsigned int len{longest_string.size() + 4};
+
 	std::cout << "Usage: \n";
 	std::cout << "  <a.out> <path/to/text_file> [--help] [--print] [--table] [--frequency] [--remove=<word>] [--substitute=<old>+<new>]\n\n";
 	std::cout << "Required Arguments: \n";
@@ -157,12 +160,12 @@ void print_help(){
 	std::cout << "  <path/to/text_file>" << std::setw(5) << "Path to a text file.\n\n";
 
 	std::cout << "Optional Arguments: \n";
-	std::cout << "  --help" << std::setw(5) << "Print this message.\n";
-	std::cout << "  --print" << std::setw(5) << "Print the content of the provided text file.\n";
-	std::cout << "  --table" << std::setw(5) << "Print the frequency of the words sorted by the words.\n";
-	std::cout << "  --frequency" << std::setw(5) << "Print the frequency of the words sorted by the frequencies.\n";
-	std::cout << "  --remove=<word>" << std::setw(5) << "Remove all occurrences of <word>.\n";
-	std::cout << "  --substitute=<old>+<new>" << std::setw(5) << "Substitutes all occurrences of <old> with <new>.\n\n";
+	std::cout << std::left << std::setw(len) << "  --help" << "Print this message.\n";
+	std::cout << std::left << std::setw(len) << "  --print" << "Print the content of the provided text file.\n";
+	std::cout << std::left << std::setw(len) << "  --table" << "Print the frequency of the words sorted by the words.\n";
+	std::cout << std::left << std::setw(len) << "  --frequency" << "Print the frequency of the words sorted by the frequencies.\n";
+	std::cout << std::left << std::setw(len) << "  --remove=<word>" << "Remove all occurrences of <word>.\n";
+	std::cout << std::left << std::setw(len) << "  --substitute=<old>+<new>" << "Substitutes all occurrences of <old> with <new>.\n\n";
 
 	std::cout << "Example Usages: \n";
 	std::cout << "  ./a.out text_file.txt --print\n";

@@ -71,12 +71,13 @@ Required Arguments:
   <path/to/text_file>Path to a text file.
 
 Optional Arguments:
-  --helpPrint this message.
-  --printPrint the content of the provided text file.
-  --tablePrint the frequency of the words sorted by the words.
-  --frequencyPrint the frequency of the words sorted by the frequencies.
-  --remove=<word>Remove all occurrences of <word>.
-  --substitute=<old>+<new>Substitutes all occurrences of <old> with <new>.
+  --help                    Print this message.
+  --print                   Print the content of the provided text file.
+  --table                   Print the frequency of the words sorted by the words.
+  --frequency               Print the frequency of the words sorted by the frequencies.
+  --remove=<word>           Remove all occurrences of <word>.
+  --substitute=<old>+<new>  Substitutes all occurrences of <old> with <new>.
+
 Example Usages:
   ./a.out text_file.txt --print
   ./a.out text_file.txt --remove=word --table
