@@ -196,13 +196,13 @@ bool is_argument_valid(std::string const& arg){
 		return true;
 	}
 
-	std::vector<std::string> parts{_parse_argument(arg)};
+	std::vector<std::string> parts{parse_argument(arg)};
 
 	if (parts.at(0) == "--remove"){
 		return (parts.at(0) + "=" + parts.at(1) == arg) && (parts.at(1).size() > 0) && (parts.at(2).size() == 0);
 	}
 		
-	if (parts.at(0) == "--sustitute"){
+	if (parts.at(0) == "--substitute"){
 		return (parts.at(0) + "=" + parts.at(1) + "+" + parts.at(2) == arg) && 
 												   (parts.at(1).size() > 0) && 
 												   (parts.at(2).size() > 0);

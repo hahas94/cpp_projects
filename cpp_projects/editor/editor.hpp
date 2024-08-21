@@ -27,9 +27,9 @@ void print_frequency(std::unordered_map<std::string, int> const& table, std::ost
 
 std::pair<std::string, std::string> split_string(std::string const& str, char split_char);
 
-bool is_argument_valid(std::string const& arg);
+std::vector<std::string> parse_argument(std::string const& arg);
 
-std::vector<std::string> _parse_argument(std::string const& arg);
+bool is_argument_valid(std::string const& arg);
 
 #endif // EDITOR_HPP
 

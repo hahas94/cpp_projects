@@ -257,17 +257,17 @@ TEST_CASE("Test is_argument_valid() function"){
 	REQUIRE_FALSE(is_argument_valid(s4));
 
 	// --sustitute
-	std::string s5{"--sustitute=w1+w2"};
+	std::string s5{"--substitute=w1+w2"};
 	REQUIRE(is_argument_valid(s5));
-	s5 = "--sustitute";
+	s5 = "--substitute";
 	REQUIRE_FALSE(is_argument_valid(s5));
-	s5 = "--sustitute=";
+	s5 = "--substitute=";
 	REQUIRE_FALSE(is_argument_valid(s5));
-	s5 = "--sustitute=w1";
+	s5 = "--substitute=w1";
 	REQUIRE_FALSE(is_argument_valid(s5));
-	s5 = "--sustitute=w1+";
+	s5 = "--substitute=w1+";
 	REQUIRE_FALSE(is_argument_valid(s5));
-	s5 = "--sustitute=+";
+	s5 = "--substitute=+";
 	REQUIRE_FALSE(is_argument_valid(s5));
 
 	// non-existing flags
