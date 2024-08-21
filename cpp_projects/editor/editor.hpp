@@ -25,6 +25,8 @@ void print_table(std::unordered_map<std::string, int> const& table, std::ostream
 
 void print_frequency(std::unordered_map<std::string, int> const& table, std::ostream& os = std::cout);
 
+void print_help();
+
 std::pair<std::string, std::string> split_string(std::string const& str, char split_char);
 
 std::vector<std::string> parse_argument(std::string const& arg);

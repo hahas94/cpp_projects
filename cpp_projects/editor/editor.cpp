@@ -144,6 +144,33 @@ void print_frequency(std::unordered_map<std::string, int> const& table, std::ost
 }
 
 /**
+ * @brief Print help message.
+ * 
+ * Describe the correct way to run the program, and the possible arguments.
+ * 
+ */
+void print_help(){
+	std::cout << "Usage: \n";
+	std::cout << "  <a.out> <path/to/text_file> [--help] [--print] [--table] [--frequency] [--remove=<word>] [--substitute=<old>+<new>]\n\n";
+	std::cout << "Required Arguments: \n";
+	std::cout << "  <a.out>" << std::setw(5) << "An executable file.\n";
+	std::cout << "  <path/to/text_file>" << std::setw(5) << "Path to a text file.\n\n";
+
+	std::cout << "Optional Arguments: \n";
+	std::cout << "  --help" << std::setw(5) << "Print this message.\n";
+	std::cout << "  --print" << std::setw(5) << "Print the content of the provided text file.\n";
+	std::cout << "  --table" << std::setw(5) << "Print the frequency of the words sorted by the words.\n";
+	std::cout << "  --frequency" << std::setw(5) << "Print the frequency of the words sorted by the frequencies.\n";
+	std::cout << "  --remove=<word>" << std::setw(5) << "Remove all occurrences of <word>.\n";
+	std::cout << "  --substitute=<old>+<new>" << std::setw(5) << "Substitutes all occurrences of <old> with <new>.\n\n";
+
+	std::cout << "Example Usages: \n";
+	std::cout << "  ./a.out text_file.txt --print\n";
+	std::cout << "  ./a.out text_file.txt --remove=word --table\n";
+	std::cout << "  ./a.out text_file.txt --substitute=word+WORD --frequency\n\n";
+}
+
+/**
  * @brief Split a string into two pieces by some character, return both pieces.
  * 
  * @param str: a string.
@@ -203,7 +230,7 @@ std::vector<std::string> parse_argument(std::string const& arg){
  * @return true for valid argument else false.
  */
 bool is_argument_valid(std::string const& arg){
-	if(arg == "--print" || arg == "--table" || arg == "--frequency"){
+	if(arg == "--help" || arg == "--print" || arg == "--table" || arg == "--frequency"){
 		return true;
 	}
 
