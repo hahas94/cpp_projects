@@ -20,7 +20,7 @@ set(SOURCES
 )
 
 # Add the main executable
-add_executable(EditorApp edit.cpp ${SOURCES})
+add_executable(EditorApp edit.cpp editor.cpp editor.hpp)
 
 # Add the test executable
 add_executable(EditorTest editor_test.cpp ${SOURCES})
