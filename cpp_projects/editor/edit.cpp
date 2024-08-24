@@ -11,7 +11,7 @@
  *  such as:
  * -- name of file to read
  *   followed by any of these arguments, in any order:
- *   --helper
+ *   --help: Print the help message.
  *   --print: will print the text on the console.
  *   --frequency: will print each word and their count in descending order.
  *   --table: similar as `--frequency`, but sorted in lexicographic order.
